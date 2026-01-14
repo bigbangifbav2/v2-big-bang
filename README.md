@@ -1,4 +1,4 @@
-# ⚛️ Big Bang Game - Versão 2.0 (Modern)
+# ⚛️ Big Bang Game - Versão 2 (2026)
 
 > Uma releitura moderna e interativa do clássico jogo educacional de química, reescrito do zero com tecnologias web atuais.
 
