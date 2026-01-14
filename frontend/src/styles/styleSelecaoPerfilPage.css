@@ -1,0 +1,29 @@
+/* src/pages/SelecaoPerfilPage.css */
+
+/* Esta classe deve ser adicionada ao <body> via useEffect */
+.niveis-page-body {
+    background: -webkit-radial-gradient(#00A575, #003135) !important; 
+    background: radial-gradient(#00A575, #003135) !important;
+    min-height: 100vh;
+    width: 100%;
+    overflow: auto !important;
+}
+.avatars-container {
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px; 
+}
+.avatar-option {
+    flex-basis: 150px; 
+    max-width: 150px; 
+    text-align: center;
+}
+.avatar-option img {
+    width: 100%; 
+    height: auto;
+}
+.form-control {
+    text-align: center;
+    font-size: 1.5rem;
+}

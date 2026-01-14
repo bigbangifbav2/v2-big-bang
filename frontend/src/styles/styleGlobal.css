@@ -1,0 +1,55 @@
+/* src/index.css (Arquivo 1 de 2) */
+
+/* --- 1. ESTILOS GLOBAIS --- */
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box; 
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    color: white;
+    overflow-x: hidden; /* IMPEDE O SCROLL HORIZONTAL GLOBAL */
+}
+
+/* Fundo roxo (Padrão para Home) */
+body {
+    background-image: -webkit-radial-gradient(#9329B3, #0D0D2F);
+    background-image: -o-radial-gradient(#9329B3, #0D0D2F);
+    background-image: -moz-radial-gradient(#9329B3, #0D0D2F);
+    background-image: radial-gradient(#9329B3, #0D0D2F);
+    min-height: 100vh;
+}
+
+/* --- 2. CLASSES DE FUNDO (USADAS PELOS useEffects) --- */
+
+/* Fundo Verde (Jogo, Perfil, Níveis) */
+.niveis-page-body {
+    background: -webkit-radial-gradient(#00A575, #003135) !important; 
+    background: radial-gradient(#00A575, #003135) !important;
+    min-height: 100vh;
+    width: 100%;
+    overflow-y: auto !important;
+}
+
+/* Fundo Ranking */
+.ranking-page-body {
+    background-color: #2F6D6D !important; 
+    background-image: linear-gradient(to bottom, #2F6D6D, #004D40) !important; 
+    min-height: 100vh;
+}
+
+/* --- 3. LAYOUT CENTRALIZADO (Para Home, Ranking, Perfil, etc.) --- */
+.layout-centralizado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    min-height: 100vh; /* Ocupa a tela inteira */
+    width: 100%;
+    padding: 20px;
+}

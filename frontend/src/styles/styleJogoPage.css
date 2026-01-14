@@ -1,0 +1,642 @@
+/* src/pages/styleJogoPage.css */
+/* ESTE ARQUIVO SÓ AFETA A JOGOPAGE */
+
+/* =================================================================== */
+/* --- Layout da TELA JOGO (3 Colunas Corrigido) --- */
+/* =================================================================== */
+
+/* O layout principal do jogo */
+.game-layout-container {
+  display: grid;
+  /* Define 3 colunas: Esquerda, Centro, Direita */
+  /* Coladas nas bordas, sem padding/margin externo */
+  grid-template-columns: 1fr 2.5fr 1fr;
+  width: 100%; /* Ocupa 100% da tela */
+  height: 100vh;
+}
+
+/* As 3 colunas */
+.game-sidebar-left,
+.game-main-content,
+.game-sidebar-right {
+  /* CORREÇÃO: Remove padding lateral e mantém vertical */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 0;
+  padding-right: 0;
+
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto; /* Scroll vertical INTERNO da coluna */
+  overflow-x: hidden;
+}
+
+/* --- COLUNA ESQUERDA (AVATAR) --- */
+.game-sidebar-left {
+  background-color: rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: flex; /* Define como container flex */
+  flex-direction: column; /* Itens empilhados verticalmente */
+  height: 100vh; /* Ocupa a altura total da viewport */
+  padding: 15px; /* Padding interno da coluna */
+  box-sizing: border-box;
+  align-items: center; /* Centraliza itens horizontalmente */
+  justify-content: flex-start; /* Alinha itens ao topo */
+  color: white;
+}
+
+.player-info-fixed-top {
+  flex: 0 0 auto; /* Não cresce nem encolhe, ocupa o espaço necessário */
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pauling-content-area,
+.pauling-display-area {
+  flex: 1; /* Faz com que esta área ocupe todo o espaço vertical restante */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o conteúdo horizontalmente dentro desta área */
+  width: 100%;
+  margin-top: 10px;
+  min-height: 0; /* Essencial para flex items com overflow */
+  overflow-y: auto; /* Adiciona scroll se o conteúdo for muito longo */
+  padding: 0 5px 1rem 5px;
+}
+
+.player-info-fixed-top .player-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #15d2a3;
+  margin-top: 10px;
+}
+.player-info-fixed-top .player-name { font-size: 1.5em; margin-top: 10px; }
+.player-info-fixed-top .player-score { font-size: 1.2em; font-weight: bold; }
+
+
+
+/*.player-avatar {*/
+/*  width: 100px;*/
+/*  height: 100px;*/
+/*  border-radius: 50%;*/
+/*  border: 3px solid #15d2a3;*/
+/*  margin-top: 10px;*/
+/*}*/
+/*.player-name { font-size: 1.5em; margin-top: 10px; }*/
+
+/*.player-score { font-size: 1.2em; font-weight: bold; }*/
+
+.status-message-box {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px; /* Espaço abaixo da caixa de mensagem */
+  min-height: 50px;
+  color: #fff;
+  font-weight: bold;
+  width: 100%;
+  text-align: center; /* Centraliza o texto */
+  /* Adicione uma transição suave para a mudança de cor */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* --- NOVO: Feedback de ACERTO (Verde) --- */
+.status-message-box.acerto {
+  background-color: #28a745; /* Verde Bootstrap (success) */
+  /* Um verde claro, mas vibrante */
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4); /* Uma sombra verde suave */
+  transform: scale(1.02); /* Um pequeno "pop" visual */
+}
+
+/* --- NOVO: Feedback de ERRO (Vermelho) --- */
+.status-message-box.erro {
+  background-color: #dc3545; /* Vermelho Bootstrap (danger) */
+  /* Um vermelho claro, mas vibrante */
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4); /* Uma sombra vermelha suave */
+  transform: scale(1.02);
+}
+
+.pauling-diagram {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+/* --- COLUNA CENTRAL (TABELA) --- */
+.game-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0; /* <-- CORREÇÃO 2: Força a coluna a encolher */
+  padding: 20px; /* Coluna central DEVE ter padding */
+}
+.question-title { font-size: 2.5em; margin-bottom: 20px; color: white; }
+
+.dicas-container-central {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1100px; /* Tabela mais espaçosa */
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+.dicas-container-central h6 { font-size: 1.1em; margin: 5px 0; }
+
+/* --- TABELA PERIÓDICA --- */
+
+
+
+/* O número individual */
+.indice-grupo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  /* Move o número para cima para sair da linha zero e flutuar sobre a tabela */
+  transform: translateY(-20px);
+
+  color: #15d2a3;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 0 2px 4px rgba(0,0,0,1); /* Sombra forte para ler em cima de qualquer cor */
+
+  /* Reforço de visibilidade */
+  position: relative;
+  z-index: 101;
+}
+
+.espaco-lateral-vazio {
+  width: 100%;
+  height: 0;
+}
+
+.indices-superiores {
+  margin-bottom: 5px; /* Um pequeno espaço antes dos elementos começarem */
+  align-items: end;   /* Alinha os números na parte inferior da linha imaginária */
+}
+
+.espaco-canto {
+  /* Ocupa os 30px iniciais da coluna de períodos */
+  width: 100%;
+  height: 100%;
+}
+
+.indice-coluna-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #15d2a3;
+  font-weight: bold;
+  font-size: 14px;
+  padding-bottom: 2px;
+}
+
+.tabela-grid-container {
+  width: 100%;
+  max-width: 1100px;
+
+  margin-top: 60px;
+
+  padding-top: 0; /* Removemos o padding interno, vamos usar a margem externa */
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* --- CONFIGURAÇÃO DAS LINHAS DE BOTÕES --- */
+.tabela-linha {
+  display: grid;
+  grid-template-columns: 30px repeat(18, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+/* --- RESTO DO CSS (Índices laterais, Botões, etc) --- */
+.tabela-grid-container.sem-indices .tabela-linha {
+  grid-template-columns: repeat(18, 1fr);
+}
+
+.indice-periodo {
+  color: #15d2a3;
+  font-weight: bold;
+  text-align: center;
+  font-size: clamp(12px, 1vw, 18px);
+  user-select: none;
+  align-self: center;
+}
+
+.quadrado {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  font-size: clamp(10px, 0.7vw, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quadrado:hover { background-color: rgba(255, 255, 255, 0.2); }
+.quadrado.subnivel-s { background-color: rgba(230, 100, 100, 0.5); }
+.quadrado.subnivel-p { background-color: rgba(240, 230, 100, 0.5); }
+.quadrado.subnivel-d { background-color: rgba(100, 150, 230, 0.5); }
+.quadrado.subnivel-f { background-color: rgba(100, 230, 120, 0.5); }
+.quadrado:disabled {
+  background-color: #00A575;
+  color: black;
+  opacity: 1;
+}
+
+.espaco-branco { padding: 0; margin: 0; }
+
+/* --- COLUNA DIREITA (DICAS / ELEMENTOS) --- */
+.game-sidebar-right {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.2);
+  /* Adiciona padding INTERNO */
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+}
+
+.elements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.element-option-btn {
+  border: 2px solid #ddd;
+  background: #222;
+  padding: 3px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.element-option-btn:hover { border-color: #15d2a3; transform: scale(1.05); }
+.element-option-btn img { width: 100%; height: auto; display: block; }
+.element-option-btn:disabled { cursor: not-allowed; }
+.element-option-btn:disabled img { filter: grayscale(100%) opacity(0.4); }
+
+/* Caixa de elemento selecionado */
+.selected-element-info {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Altura mínima para o texto */
+}
+
+.selected-element-info p {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: white; /* Esconde o texto por padrão */
+}
+
+.selected-element-info img {
+  visibility: visible !important; /* Força visibilidade */
+  height: auto !important;        /* Força altura automática */
+  display: block;
+  opacity: 1;
+}
+
+.img-distribuicao {
+  width: 100%;
+  max-width: 12.5rem;
+  height: auto;
+  border-radius: 4px;
+  background-color: #222;
+  border: 2px solid #555;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.img-elemento-destaque {
+  width: 80px;  /* Reduzi de 100px para 80px */
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  margin-bottom: 5px; /* Margem menor */
+  background-color: #222;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+/* Regra para MOSTRAR o conteúdo quando selecionado */
+.selected-element-info.visivel p,
+.selected-element-info.visivel img {
+    visibility: visible;
+    height: auto; /* Expande a altura da imagem */
+}
+
+.btn-dica {
+  width: 100%;
+  padding: 15px; /* Reduzi de 20px para 10px! Isso economiza muito espaço */
+  font-size: 1.1em; /* Fonte um pouco menor */
+  font-weight: bold;
+  color: white;
+  background-color: #00A575;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+.btn-dica:hover { background-color: #00c088; }
+.btn-dica:disabled { background-color: #555; cursor: not-allowed; }
+
+.home-button button {
+    background: none;
+    border: none;
+    font-size: 3em;
+    cursor: pointer;
+    opacity: 0.7;
+}
+.home-button button:hover { opacity: 1; transform: scale(1.1); }
+
+.pauling-diagram-btn { /* ANTES: .pauling-diagram */
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 20px; /* Espaço abaixo do botão do diagrama */
+  width: 100%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1em;
+  font-family: inherit;
+}
+.pauling-diagram-btn:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Renomeado: Agora é para o texto "CERNE DO GÁS NOBRE" */
+.pauling-gas-nobre { /* ANTES: .pauling-diagram */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #15d2a3; /* Texto verde para combinar */
+  text-transform: uppercase;
+}
+
+
+/* NOVO: Container para quando o diagrama estiver visível na sidebar */
+.pauling-display-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centraliza o diagrama verticalmente */
+  width: 100%;
+
+  /* IMPORTANTE: Impede que o flexbox force o tamanho mínimo além da largura da tela */
+  min-width: 0;
+  overflow: hidden;
+
+  margin-top: 10px;
+  padding: 0 5px 1rem 5px;
+}
+
+.pauling-voltar-btn {
+  flex: 0 0 auto; /* Garante que o botão tenha altura fixa e não seja espremido */
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #15d2a3;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Espaço abaixo do botão de voltar */
+  align-self: flex-start; /* Alinha à esquerda dentro de .pauling-display-area */
+  line-height: 1; /* Ajuda a centralizar o texto "<" */
+}
+.pauling-voltar-btn:hover {
+  color: white;
+}
+
+.pauling-diagram-img {
+  flex: 0 1 auto;
+
+  /* Define o tamanho */
+  width: auto;      /* Deixa a largura automática baseada na altura */
+  height: auto;     /* Mantém a proporção correta */
+
+  /* LIMITES: Aqui resolvemos o corte e diminuímos o tamanho */
+  max-width: 100%;   /* Ocupa no máximo 90% da largura da coluna (cria margem de segurança) */
+  max-height: 50vh; /* Limita a altura a 40% da tela para não ficar gigante em monitores verticais */
+
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;   /* Centraliza horizontalmente */
+
+  /* Opcional: Adiciona uma sombra suave para destacar do fundo */
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+.home-button {
+  margin-top: 0.15rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* O botão em si (transparente) */
+.home-button button {
+  background: none;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: transform 0.2s;
+
+  /* Remove qualquer tamanho fixo que possa estar no botão */
+  width: auto;
+  height: auto;
+}
+
+.home-button button:hover {
+  transform: scale(1.1); /* Efeito de zoom leve */
+  opacity: 1;
+}
+
+/* --- A CORREÇÃO DO TAMANHO ESTÁ AQUI --- */
+.home-icon {
+  width: 50px !important; /* Força o tamanho do ícone */
+  height: auto !important;
+  display: block;
+  object-fit: contain;
+}
+
+
+/* src/pages/styleJogoPage.css */
+
+/* --- TELA DE FIM DE JOGO --- */
+/* 1. O Container Principal (Novo Background) */
+.tela-fim-jogo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* NOVO BACKGROUND: Gradiente "Deep Space" (Azul Escuro/Roxo) */
+  /* Diferente do verde do jogo, dá destaque à tela final */
+  background: radial-gradient(circle at center, #2b32b2 0%, #141e30 100%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 50px;
+  z-index: 9999;
+}
+
+/* 2. Conteúdo Central (Blocos de Texto) */
+.fim-conteudo-central {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  /* Garante que não estique na tela toda */
+  max-width: 500px;
+
+  /* Espaçamento vertical entre os blocos */
+  gap: 20px;
+
+  z-index: 10;
+}
+
+.fim-info-box {
+  background-color: #00BFA5; /* Mantive o verde ciano para identidade visual */
+  color: #00251a;
+
+  /* Tamanho controlado */
+  width: 90%;
+  padding: 15px 0;
+
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.5rem;
+  border-radius: 12px;
+
+  /* Sombra para dar volume */
+  box-shadow: 0 4px 0 #00897b, 0 10px 20px rgba(0,0,0,0.3);
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 3. Área das Imagens (Bandeiras e Troféus) */
+.fim-decoracao-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh; /* Ocupa espaço suficiente */
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  pointer-events: none;
+}
+
+/* Bandeiras Centrais */
+.img-finish {
+  width: 600px;
+  max-width: 85%;
+  height: auto;
+  margin-bottom: 100px; /* Subi um pouco para dar espaço aos botões */
+  z-index: 1;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+/* Troféus Laterais */
+.img-trofeu {
+  width: 120px;
+  height: auto;
+  position: absolute;
+  bottom: 20px;
+  z-index: 2;
+}
+
+.trofeu-esquerda {
+  left: 10%;
+  transform: rotate(-15deg);
+}
+
+.trofeu-direita {
+  right: 10%;
+  transform: rotate(15deg);
+}
+
+/* 4. Botões do Rodapé (Ranking e Home) */
+.botoes-fim-container {
+  position: absolute;
+  bottom: 50px; /* Distância do rodapé */
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px; /* Distância entre os dois botões */
+
+  z-index: 20;
+  padding: 20px;
+}
+
+/* Estilo UNIFICADO para os botões (Garante que fiquem iguais) */
+.btn-icon-fim {
+  /* Tamanho FIXO e IGUAL para ambos */
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15); /* Vidro */
+  border: 3px solid #00BFA5;
+
+  /* Centraliza o ícone dentro da bolinha */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito elástico */
+  backdrop-filter: blur(5px);
+}
+
+.btn-icon-fim:hover {
+  transform: scale(1.2);
+  background-color: #00BFA5;
+  box-shadow: 0 0 30px rgba(0, 191, 165, 0.6);
+  border-color: white;
+}
+
+/* Tamanho da imagem DENTRO do botão */
+.btn-icon-fim img {
+  width: 60%; /* O ícone ocupa metade do botão */
+  height: auto;
+  object-fit: contain;
+  display: block; /* Remove comportamentos estranhos de linha */
+}

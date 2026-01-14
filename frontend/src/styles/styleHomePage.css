@@ -1,0 +1,62 @@
+/* src/pages/HomePage.css */
+
+.home-interactive-area {
+    position: relative;
+    width: 100%; 
+}
+.estrutura{
+    width: 100%; 
+    height: auto;
+    display: block;
+}
+
+#bt_play{
+    position: absolute;
+    bottom: 35%; 
+    left: 38%; 
+    width: 20%;
+}
+#bt_play:hover{
+    box-shadow: 0px 0px 35px #CCC;
+    border-radius:180px;
+}
+#bt_tutorial{
+    position: absolute;
+    bottom: 75%; 
+    left: 35%; 
+    width: 10%;
+}
+#bt_tutorial:hover{
+    box-shadow: 0px 0px 25px #CCC;
+    border-radius:180px;
+}
+#bt_ranking{
+    position: absolute;
+    bottom: 31%; 
+    left: 68.5%; 
+    width: 10%;
+}
+#bt_ranking:hover{
+    box-shadow: 0px 0px 25px #CCC;
+    border-radius:180px;
+}
+#bt_creditos{
+    position: absolute;
+    bottom: 14%; 
+    left: 23%; 
+    width: 10%;
+}
+#bt_creditos:hover{
+    box-shadow: 0px 0px 25px #CCC;
+    border-radius:180px;
+}
+#bt_som #imgSom{
+    position: absolute;
+    bottom: 5%; 
+    left: 80%; 
+    width: 8%;
+}
+#bt_som #imgSom:hover{
+    box-shadow: 0px 0px 25px #CCC;
+    border-radius:180px;
+}

@@ -1,0 +1,121 @@
+/* src/pages/styleAdmin.css */
+
+/* Container Principal que segura tudo */
+.admin-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f4f6f9; /* Fundo cinza bem claro para o conteúdo */
+    overflow: hidden;
+}
+
+/* --- SIDEBAR (Menu Lateral) --- */
+.admin-sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #2c3e50 0%, #000000 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* Garante que não encolha */
+}
+
+.sidebar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #00A575; /* Verde do tema */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sidebar-menu {
+    flex: 1; /* Ocupa o espaço do meio */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Links do Menu */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #b0b0b0;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.sidebar-link.active {
+    background-color: #00A575;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 165, 117, 0.3);
+}
+
+.sidebar-link span {
+    margin-left: 10px;
+}
+
+/* Rodapé do Menu (Logout) */
+.sidebar-footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 10px;
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #e74c3c;
+}
+
+/* --- ÁREA DE CONTEÚDO --- */
+.admin-content {
+    flex: 1; /* Ocupa o resto da tela */
+    padding: 30px;
+    overflow-y: auto; /* Scroll apenas no conteúdo */
+    background: radial-gradient(circle, #4b134f 0%, #110b29 100%); /* Fundo roxo do seu tema */
+}
+
+/* Estilo para a tela de Boas Vindas */
+.welcome-container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.welcome-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}

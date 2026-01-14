@@ -1,0 +1,426 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+	
+	background-image:  -webkit-radial-gradient(#9329B3, #0D0D2F); /* For Safari 5.1 to 6.0 */
+	background-image:  -o-radial-gradient(#9329B3, #0D0D2F); /* For Opera 11.1 to 12.0 */
+	background-image:  -moz-radial-gradient(#9329B3, #0D0D2F); /* For Firefox 3.6 to 15 */
+	background-image:  radial-gradient(#9329B3, #0D0D2F); /* Standard syntax */
+	background-image: -moz-radial-gradient(#9329B3, #0D0D2F);
+}
+
+.home-interactive-area {
+  position: relative;
+  width: 100%;
+}
+
+.estrutura{
+	width: 100%; /* Garante que a imagem de fundo ocupe 100% do seu contêiner pai */
+  height: auto;
+  display: block;
+
+}
+
+#bt_play{
+	position: absolute;
+  bottom: 35%; /* Ajuste este valor. Era 38% */
+  left: 38%; /* Ajuste este valor. Era 37% */
+  width: 20%;
+}
+
+#bt_play:hover{
+	box-shadow: 0px 0px 35px #CCC;
+	border-radius:180px;
+	-moz-border-radius:180px;
+	-webkit-border-radius:180px;
+}
+
+#bt_tutorial{
+	position: absolute;
+  bottom: 75%; /* Ajuste este valor. Era 76% */
+  left: 35%; /* Ajuste este valor. Era 32% */
+  width: 10%;
+}
+
+#bt_ranking{
+	position: absolute;
+  bottom: 31%; /* Ajuste este valor. Era 32% */
+  left: 68.5%; /* Ajuste este valor. Era 64% */
+  width: 10%;
+}
+
+#bt_creditos{
+	position: absolute;
+  bottom: 14%; /* Ajuste este valor. Era 14% */
+  left: 23%; /* Ajuste este valor. Era 21% */
+  width: 10%;
+}
+
+#bt_creditos:hover{
+	box-shadow: 0px 0px 25px #CCC;
+	border-radius:180px;
+	-moz-border-radius:180px;
+	-webkit-border-radius:180px;
+}
+
+#bt_ranking:hover{
+	box-shadow: 0px 0px 25px #CCC;
+	border-radius:180px;
+	-moz-border-radius:180px;
+	-webkit-border-radius:180px;
+}
+
+#bt_tutorial:hover{
+	box-shadow: 0px 0px 25px #CCC;
+	border-radius:180px;
+	-moz-border-radius:180px;
+	-webkit-border-radius:180px;
+}
+
+#bt_som #imgSom{
+	position: absolute;
+  bottom: 5%; /* Ajuste este valor. Era 4% */
+  left: 80%; /* Ajuste este valor. Era 70% */
+  width: 8%;
+}
+
+#bt_som #imgSom:hover{
+	box-shadow: 0px 0px 25px #CCC;
+	border-radius:180px;
+	-moz-border-radius:180px;
+	-webkit-border-radius:180px;
+}
+
+
+/*TELA RANKING*/
+/* --- CORREÇÕES GLOBAIS E BACKGROUND --- */
+
+/* Aplica o fundo verde-água (similar à imagem) */
+body {
+  background-image: -webkit-radial-gradient(#9329B3, #0D0D2F);
+  background-image: -o-radial-gradient(#9329B3, #0D0D2F);
+  background-image: -moz-radial-gradient(#9329B3, #0D0D2F);
+  background-image: radial-gradient(#9329B3, #0D0D2F);
+  background-image: -moz-radial-gradient(#9329B3, #0D0D2F);
+  min-height: 100vh; /* Garante que o fundo cubra a tela toda */
+}
+
+.ranking-page-body {
+  background-color: #2F6D6D !important; 
+  background-image: linear-gradient(to bottom, #2F6D6D, #004D40) !important; 
+  min-height: 100vh;
+}
+/* A classe 'barra' provavelmente está no seu CSS legado e define o container da página */
+.barra {
+    /* Ajuste de margens ou padding se necessário */
+  padding: 20px;
+}
+
+/* --- ESTILO DO TÍTULO E LAYOUT PRINCIPAL --- */
+.ranking-main-title {
+    /* Garante que a imagem do título seja responsiva e centralizada */
+  display: block;
+  margin: 0 auto 30px auto; 
+  width: 100%; /* Adapte conforme a necessidade */
+  max-width: 400px;
+}
+#ranking {
+  width: 100%;
+  max-width: 300px; /* Ajuste o tamanho da imagem do título */
+  height: auto;
+}
+
+/* --- ESTILO DOS BLOCOS DE RANKING (Listas e Cores) --- */
+.blocos {
+  background-color: rgba(0, 0, 0, 0.4); /* Fundo semi-transparente ou cor escura */
+  padding: 10px;
+  margin: 0 5px; /* Pequeno espaçamento entre as colunas */
+  border-radius: 5px;
+}
+/* Títulos dos Níveis (INICIANTE, CIENTISTA, CURIOSO) */
+.blocos h5 {
+    color: white; 
+    text-align: center;
+    margin-top: 10px;
+}
+.blocos h6 {
+    color: white; /* Cor do texto dentro das barras */
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 16px;
+    /* Linhas para o texto zebrado */
+    line-height: 2; 
+}
+
+/* --- EFEITO ZEBRA (cor1 e cor2) --- */
+.cor1 {
+    background-color: #004D40; /* Cor escura (verde profundo) */
+}
+.cor2 {
+    background-color: #006064; /* Cor clara (verde ciano) */
+}
+
+/* --- BOTÃO VOLTAR (Corrigir Desproporcionalidade) --- */
+#bt_voltar {
+    margin-top: 30px; 
+    /* Posicionamento mais preciso, se necessário, mas as classes Bootstrap devem ajudar */
+}
+#bt_voltar img {
+    width: 50px; /* Reduz o tamanho da imagem de voltar para ser proporcional */
+    height: auto;
+}
+
+.niveis-page-body {
+    /* Garante que o gradiente da página de níveis seja aplicado */
+    background: -webkit-radial-gradient(#00A575, #003135) !important; 
+    background: radial-gradient(#00A575, #003135) !important;
+    min-height: 100vh;
+}
+
+.selecao-perfil-wrapper {
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Limita a largura do conteúdo para não ficar "espalhado" em telas largas */
+.selecao-content {
+    width: 100%;
+    max-width: 900px; /* Largura máxima do painel */
+    background-color: rgba(0, 0, 0, 0.2); /* Opcional: Fundo leve para destacar */
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.avatars-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espaço entre os avatares */
+    flex-wrap: wrap;
+    padding: 20px 10px;
+}
+
+/* O Container Redondo (A Bolinha) */
+.avatar-circle {
+    width: 140px;  /* Tamanho total do círculo */
+    height: 140px;
+    border-radius: 50%; /* Faz ficar redondo */
+
+    /* Borda invisível por padrão para não pular quando seleciona */
+    border: 5px solid transparent;
+
+    /* Centraliza a imagem dentro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 5px; /* Um respiro entre a borda e o monstro */
+}
+
+/* A Imagem do Monstro */
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Garante que o monstro não distorça */
+    border-radius: 50%;
+}
+
+/* --- ESTADOS --- */
+
+/* Quando passar o mouse */
+.avatar-circle:hover {
+    transform: scale(1.1); /* Aumenta um pouquinho */
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* QUANDO SELECIONADO (Essa classe será adicionada pelo React) */
+.avatar-circle.selected {
+    border-color: #00FFCC; /* Borda Verde Neon */
+    background-color: rgba(255, 255, 255, 0.15); /* Fundo leve */
+    transform: scale(1.1); /* Mantém o tamanho aumentado */
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); /* Brilho neon */
+}
+
+.form-control {
+    text-align: center;
+    /* Se precisar aumentar o tamanho do input de nome: */
+    font-size: 1.5rem;
+}
+
+body.niveis-page-body {
+    padding: 0 !important;
+    margin: 0 !important;
+    /* Evita que a página "pule" com scrollbars desnecessários */
+    overflow: hidden; 
+}
+
+/* Se você usa uma div ".barra" para envolver suas páginas... */
+body.niveis-page-body .barra {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Botão de Engrenagem (Admin) */
+.btn-admin-gear {
+    position: fixed; /* Fixa na tela */
+
+    /* POSICIONAMENTO NOVO: CANTO INFERIOR DIREITO */
+    top: auto;    /* Remove a fixação do topo */
+    bottom: 30px; /* 30px de distância do chão */
+    right: 30px;  /* 30px de distância da direita */
+
+    /* Estilo Visual (Mantido) */
+    background: rgba(0, 0, 0, 0.5); /* Um pouco mais escuro para destacar no rodapé */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+
+    width: 60px; /* Um pouquinho maior para ser fácil de clicar */
+    height: 60px;
+
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    /* Sombra para destacar do fundo */
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.btn-admin-gear:hover {
+    background-color: #15d2a3;
+    border-color: #fff;
+    color: #000; /* Muda a cor do ícone para preto ao passar o mouse */
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 20px #15d2a3;
+}
+
+
+/* --- Estilo dos Cartões --- */
+.cartao-nivel {
+    position: relative;
+    width: 400px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.cartao-nivel img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: filter 0.3s ease;
+    padding: 40px;
+}
+
+/* Efeito de subida no hover */
+.cartao-nivel:hover {
+    transform: translateY(-10px) scale(1.02);
+    /* Sombra um pouco mais forte para destacar */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+/* --- A Descrição (Hover) --- */
+.descricao-hover {
+    position: absolute;
+
+    /* MUDANÇA PRINCIPAL AQUI: */
+    bottom: 0;       /* Fixa no fundo */
+    left: 0;
+    width: 100%;
+    height: 65%;     /* Cobre apenas 65% da imagem (a parte de baixo) */
+
+    box-sizing: border-box;
+
+    /* Gradiente mais suave para não ficar um bloco sólido feio */
+    background: linear-gradient(to top, rgba(13, 13, 47, 0.98) 10%, rgba(13, 13, 47, 0.85) 80%, transparent 100%);
+
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente dentro da área de 65% */
+    justify-content: center;
+    padding: 20px 25px 5px 25px; /* Padding: top right bottom left */
+
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, height 0.3s ease;
+}
+
+.descricao-hover p {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+    font-family: 'Verdana', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,1);
+}
+
+.cartao-nivel:hover .descricao-hover {
+    opacity: 1;
+}
+
+/* Botão voltar */
+.efeito-btn {
+    transition: transform 0.2s, filter 0.2s;
+}
+.efeito-btn:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* ==========================================================================
+   ADICIONAR AO FINAL DO SEU ARQUIVO CSS ATUAL
+   ========================================================================== */
+
+/* Estilo do container do texto */
+.descricao-hover {
+    position: absolute;
+    bottom: 0;
+    left: 6px; /* Alinha com o left: 6px do #imagemNivel */
+    width: 95%; /* Mesma largura da imagem */
+    height: 60%;
+
+    /* Gradiente roxo transparente para cima */
+    background: linear-gradient(to top, rgba(13, 13, 47, 0.98) 0%, rgba(13, 13, 47, 0.8) 70%, transparent 100%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+
+    opacity: 0; /* Começa invisível */
+    transition: opacity 0.3s ease-in-out;
+
+    /* Arredonda a parte de baixo para acompanhar a borda */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    pointer-events: none; /* Deixa o clique passar para o Link */
+}
+
+/* Estilo do texto */
+.descricao-hover p {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+    white-space: pre-line; /* Permite pular linha com \n */
+    margin: 0;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* A MÁGICA: Quando passar o mouse nas classes antigas, mostra a descrição */
+.quadradoNiveis1:hover .descricao-hover,
+.quadradoNiveis2:hover .descricao-hover,
+.quadradoNiveis3:hover .descricao-hover {
+    opacity: 1;
+}

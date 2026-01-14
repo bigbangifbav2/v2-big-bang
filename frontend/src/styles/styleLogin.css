@@ -1,0 +1,125 @@
+/* src/pages/styleLogin.css */
+
+/* Garante que o container ocupe a tela toda e centralize o cartão */
+.login-page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+
+    /* Fundo com gradiente (roxo como na sua imagem, mas ajustado) */
+    background: radial-gradient(circle, #4b134f 0%, #110b29 100%);
+
+    /* Garante que fique sobreposto a qualquer estilo global estranho */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* O cartão branco */
+.login-card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+    width: 100%;
+    max-width: 400px; /* Define uma largura máxima para não ficar esmagado nem gigante */
+    min-width: 300px; /* Garante que não fique menor que isso */
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Estilização dos Inputs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Garante que o label fique a esquerda */
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-control-custom {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%; /* Ocupa a largura do cartão */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+/* Botão */
+.btn-login {
+    background-color: #00A575; /* Verde do seu tema */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #008f65;
+}
+
+.error-msg {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #ef9a9a;
+}
+
+.btn-voltar-imagem-fixo {
+    position: fixed; /* Cola no canto da tela */
+    top: 30px;       /* Distância do topo */
+    left: 30px;      /* Distância da esquerda */
+    z-index: 9999;   /* Fica por cima do cartão de login */
+    display: block;  /* Garante que o link envolva a imagem corretamente */
+    transition: transform 0.2s ease; /* Suaviza o efeito de hover */
+    cursor: pointer;
+}
+
+/* Define o tamanho da imagem dentro do link */
+.btn-voltar-imagem-fixo img {
+    width: 3.125rem;  /* Ajuste o tamanho conforme necessário para sua imagem PNG */
+    height: auto; /* Mantém a proporção */
+    display: block;
+    /* Opcional: Adiciona uma sombra suave na imagem se ela já não tiver */
+    /* filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); */
+}
+
+/* Efeito "efeito" ao passar o mouse (aumenta ligeiramente) */
+.btn-voltar-imagem-fixo:hover {
+    transform: scale(1.1);
+}
+
+/* Responsividade para celulares */
+@media (max-width: 576px) {
+    .btn-voltar-imagem-fixo {
+        top: 15px;
+        left: 15px;
+    }
+    .btn-voltar-imagem-fixo img {
+        width: 45px; /* Imagem menor em telas pequenas */
+    }
+}

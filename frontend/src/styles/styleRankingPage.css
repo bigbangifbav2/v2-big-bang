@@ -1,0 +1,54 @@
+/* src/pages/RankingPage.css */
+
+/* Esta classe deve ser adicionada ao <body> via useEffect no RankingPage */
+.ranking-page-body {
+    background-color: #2F6D6D !important; 
+    background-image: linear-gradient(to bottom, #2F6D6D, #004D40) !important; 
+    min-height: 100vh;
+}
+
+.barra {
+    padding: 20px;
+}
+.ranking-main-title {
+    display: block;
+    margin: 0 auto 30px auto; 
+    width: 100%; 
+    max-width: 400px;
+}
+#ranking {
+    width: 100%;
+    max-width: 300px; 
+    height: auto;
+}
+.blocos {
+    background-color: rgba(0, 0, 0, 0.4); 
+    padding: 10px;
+    margin: 0 5px; 
+    border-radius: 5px;
+}
+.blocos h5 {
+    color: white; 
+    text-align: center;
+    margin-top: 10px;
+}
+.blocos h6 {
+    color: white; 
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 2; 
+}
+.cor1 {
+    background-color: #004D40; 
+}
+.cor2 {
+    background-color: #006064; 
+}
+#bt_voltar {
+    margin-top: 30px; 
+}
+#bt_voltar img {
+    width: 50px; 
+    height: auto;
+}
