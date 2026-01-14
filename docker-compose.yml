@@ -35,6 +35,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_LOGIN: ${ADMIN_LOGIN}
       CORS_ORIGIN: "http://localhost:5173"
       PORT: ${PORT}
     volumes:
