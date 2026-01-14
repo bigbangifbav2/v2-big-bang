@@ -109,11 +109,11 @@ Para garantir a estabilidade do sistema, execute os testes unitários.
 ```bash
 cd backend
 npm install
-npm test
+npm run test
 ```
 **Frontend:**
 ```bash
 cd frontend
 npm install
-npm test
+npm run test
 ```
