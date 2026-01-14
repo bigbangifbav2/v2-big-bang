@@ -43,7 +43,7 @@ No entanto, a arquitetura foi completamente transformada para atender aos padrõ
 
 Para que o `docker-compose` suba os containers corretamente, é necessário configurar o arquivo de variáveis de ambiente na **raiz do projeto** (`.env`).
 
-Este arquivo define a senha do banco de dados MySQL, a string de conexão para o banco que o Backend usará, a senha de admin, as portas de conexão e a URL da API para o Frontend.
+Este arquivo define a senha do banco de dados MySQL, a string de conexão para o banco que o Backend usará, o login e a senha de admin, as portas de conexão e a URL da API para o Frontend.
 
 ### Passo a Passo
 
@@ -68,6 +68,9 @@ JWT_SECRET="coloque_chave_secreta"
 
 # Porta do container do Node.js
 PORT=3000
+
+# Login do adminstrador do sistema
+ADMIN_LOGIN="exemplo@admin.com"
 
 # Senha do administrador do sistema
 ADMIN_PASSWORD="exemplosenhaadmin"
