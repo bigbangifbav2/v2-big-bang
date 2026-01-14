@@ -573,6 +573,7 @@ async function main() {
 
     console.log('... Processando Administradores');
 
+    const adminLogin = process.env.ADMIN_LOGIN;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (!adminPassword) {
@@ -583,11 +584,11 @@ async function main() {
     const senhaHash = await bcrypt.hash(adminPassword, 10);
 
     await prisma.administrador.upsert({
-        where: { email: 'admin@bigbang.com' },
+        where: { email: adminLogin },
         update: {},
         create: {
             nome: 'Admin Big Bang',
-            email: 'admin@bigbang.com',
+            email: adminLogin,
             senha: senhaHash,
             isSuperAdmin: true,
             podeExcluirElementos: true,
