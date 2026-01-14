@@ -1,0 +1,208 @@
+import prisma from '../../prismaClient.js';
+import fs from 'fs';
+import path from 'path';
+import uploadConfig from '../../config/upload.js';
+import { Prisma } from '@prisma/client';
+
+interface CreateDados {
+    nome: string;
+    simbolo: string;
+    nivel: number;
+    dicas: string[];
+}
+
+interface UpdateDados {
+    nome?: string;
+    simbolo?: string;
+    nivel?: number;
+    dicas?: string[];
+}
+
+interface ResultadoPaginado {
+    data: any[];
+    total: number;
+    pagina: number;
+    totalPaginas: number;
+}
+
+// Função auxiliar para apagar arquivos do disco
+const deletarImagemAntiga = async (imagemUrl: string | null) => {
+    if (!imagemUrl) return;
+    // Remove o prefixo '/uploads/' para pegar o nome real do arquivo
+    const nomeArquivo = imagemUrl.replace('/uploads/', '');
+    const caminhoArquivo = path.resolve(uploadConfig.directory, nomeArquivo);
+    try {
+        await fs.promises.stat(caminhoArquivo);
+        await fs.promises.unlink(caminhoArquivo);
+    } catch (err) {
+        // Se der erro (arquivo não existe), a gente ignora para não travar o fluxo
+    }
+};
+
+// --- MÉTODOS ---
+
+export const listarElementos = async (page: number = 1, limit: number = 10, busca?: string): Promise<ResultadoPaginado> => {
+    const skip = (page - 1) * limit;
+    const where: Prisma.questaoWhereInput = busca ? {
+        OR: [
+            { resposta: { contains: busca } },
+            { simbolo: { contains: busca } }
+        ]
+    } : {};
+
+    const [total, elementos] = await prisma.$transaction([
+        prisma.questao.count({ where }),
+        prisma.questao.findMany({
+            where,
+            include: { dicas: true },
+            orderBy: { codQuestao: 'desc' },
+            skip,
+            take: limit
+        })
+    ]);
+
+    const elementosFormatados = elementos.map(el => ({
+        id: el.codQuestao,
+        nome: el.resposta,
+        simbolo: el.simbolo,
+        codNivel: el.codNivel,
+        imagemUrl: el.imagemUrl,
+        // ADICIONADO: Retornar a nova imagem
+        imgDistribuicao: el.imgDistribuicao,
+        dicas: el.dicas.map(d => d.dica)
+    }));
+
+    return {
+        data: elementosFormatados,
+        total,
+        pagina: page,
+        totalPaginas: Math.ceil(total / limit)
+    };
+};
+
+export const buscarPorId = async (id: number) => {
+    const el = await prisma.questao.findUnique({
+        where: { codQuestao: id },
+        include: { dicas: true }
+    });
+
+    if(el) {
+        return {
+            id: el.codQuestao,
+            nome: el.resposta,
+            simbolo: el.simbolo,
+            nivel: el.codNivel,
+            imagemUrl: el.imagemUrl,
+            // ADICIONADO: Retornar a nova imagem
+            imgDistribuicao: el.imgDistribuicao,
+            dicas: el.dicas.map(d => d.dica)
+        }
+    }
+    return null;
+};
+
+// ALTERADO: Recebe o terceiro parâmetro opcional
+export const criarElemento = async (dados: CreateDados, nomeImagem?: string, nomeImagemDistribuicao?: string) => {
+    // 1. Validação: Exatamente 3 dicas
+    if (dados.dicas.length !== 3) {
+        throw new Error("É obrigatório fornecer exatamente 3 dicas.");
+    }
+
+    // 2. Validação: Elemento já existe
+    const existe = await prisma.questao.findFirst({
+        where: {
+            OR: [
+                { resposta: dados.nome },
+                { simbolo: dados.simbolo }
+            ]
+        }
+    });
+
+    if (existe) {
+        throw new Error("Elemento já cadastrado (Nome ou Símbolo duplicado).");
+    }
+
+    return await prisma.questao.create({
+        data: {
+            resposta: dados.nome,
+            simbolo: dados.simbolo,
+            codNivel: dados.nivel,
+            // Mantendo padrão de salvar o path relativo
+            imagemUrl: nomeImagem ? `/uploads/${nomeImagem}` : null,
+            // NOVO CAMPO
+            imgDistribuicao: nomeImagemDistribuicao ? `/uploads/${nomeImagemDistribuicao}` : null,
+            dicas: {
+                create: dados.dicas.map((texto, index) => ({
+                    codDica: index + 1,
+                    dica: texto,
+                    pontuacao: 5
+                }))
+            }
+        },
+        include: { dicas: true }
+    });
+};
+
+// ALTERADO: Recebe o quarto parâmetro opcional
+export const atualizarElemento = async (id: number, dados: UpdateDados, novoNomeImagem?: string, novoNomeImagemDistribuicao?: string) => {
+    if (dados.dicas && dados.dicas.length !== 3) {
+        throw new Error("É obrigatório manter exatamente 3 dicas.");
+    }
+
+    // Lógica para deletar imagens antigas se houver upload novo
+    if (novoNomeImagem || novoNomeImagemDistribuicao) {
+        const antigo = await prisma.questao.findUnique({ where: { codQuestao: id } });
+
+        // Se enviou nova imagem principal, deleta a antiga principal
+        if (novoNomeImagem && antigo?.imagemUrl) {
+            await deletarImagemAntiga(antigo.imagemUrl);
+        }
+
+        // Se enviou nova imagem de distribuição, deleta a antiga distribuição
+        if (novoNomeImagemDistribuicao && antigo?.imgDistribuicao) {
+            await deletarImagemAntiga(antigo.imgDistribuicao);
+        }
+    }
+
+    const dataToUpdate: Prisma.questaoUpdateInput = {};
+
+    if (dados.nome !== undefined) dataToUpdate.resposta = dados.nome;
+    if (dados.simbolo !== undefined) dataToUpdate.simbolo = dados.simbolo;
+    if (dados.nivel !== undefined) dataToUpdate.nivel = { connect: { codNivel: dados.nivel } };
+
+    // Atualiza paths das imagens
+    if (novoNomeImagem) dataToUpdate.imagemUrl = `/uploads/${novoNomeImagem}`;
+    if (novoNomeImagemDistribuicao) dataToUpdate.imgDistribuicao = `/uploads/${novoNomeImagemDistribuicao}`;
+
+    if (dados.dicas !== undefined) {
+        dataToUpdate.dicas = {
+            deleteMany: {},
+            create: dados.dicas.map((texto, index) => ({
+                codDica: index + 1,
+                dica: texto,
+                pontuacao: 5
+            }))
+        };
+    }
+
+    return await prisma.questao.update({
+        where: { codQuestao: id },
+        data: dataToUpdate,
+        include: { dicas: true }
+    });
+};
+
+export const deletarElemento = async (id: number) => {
+    const elemento = await prisma.questao.findUnique({ where: { codQuestao: id } });
+    if (!elemento) throw new Error("Elemento não encontrado");
+
+    // Deleta os arquivos físicos
+    await deletarImagemAntiga(elemento.imagemUrl);
+
+    // ADICIONADO: Deleta também a imagem de distribuição se existir
+    await deletarImagemAntiga(elemento.imgDistribuicao);
+
+    await prisma.dicas.deleteMany({ where: { codQuestao: id } });
+
+    return await prisma.questao.delete({ where: { codQuestao: id } });
+};

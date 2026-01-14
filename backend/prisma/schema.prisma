@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// --- MODELO DE NÍVEIS ---
+model nivel {
+  codNivel Int         @id @db.SmallInt
+  // CORREÇÃO: Usamos o enum 'nivel_nome' em vez de String
+  nome     nivel_nome?
+
+  questoes questao[]
+}
+
+// --- MODELO DE QUESTÃO ---
+model questao {
+  codQuestao Int     @id @default(autoincrement()) @db.SmallInt
+  resposta   String? @db.VarChar(30)
+  codNivel   Int?    @db.SmallInt
+
+  simbolo         String? @db.VarChar(5)
+  imagemUrl       String? @db.VarChar(255)
+  imgDistribuicao String? @db.VarChar(255)
+
+  nivel nivel?  @relation(fields: [codNivel], references: [codNivel])
+  dicas dicas[]
+
+  @@index([codNivel], map: "codNivel")
+}
+
+// --- MODELO DE DICAS ---
+model dicas {
+  codDica    Int     @default(0) @db.SmallInt
+  dica       String? @db.VarChar(150)
+  pontuacao  Int?
+  codQuestao Int     @default(0) @db.SmallInt
+
+  questao questao @relation(fields: [codQuestao], references: [codQuestao], onDelete: Cascade)
+
+  @@id([codDica, codQuestao])
+  @@index([codQuestao], map: "codQuestao")
+}
+
+// --- MODELO DE RANKING ---
+model ranking {
+  codRanking Int            @id @default(autoincrement()) @db.SmallInt
+  usuario    String?        @db.VarChar(50)
+  // Aqui mantivemos o Enum também, pois seu banco parece usar
+  nivel      ranking_nivel?
+  pontuacao  Int?
+  data_hora  DateTime?      @map("data_hora") @db.Timestamp(0)
+}
+
+model Administrador {
+  id                       Int     @id @default(autoincrement()) @map("codAdmin") @db.SmallInt
+  nome                     String  @db.VarChar(100)
+  email                    String  @unique @db.VarChar(100)
+  senha                    String  @db.VarChar(255)
+  isSuperAdmin             Boolean @default(false)
+  podeExcluirElementos     Boolean @default(false)
+  podeExcluirParticipantes Boolean @default(false)
+  podeGerenciarUsuarios    Boolean @default(false)
+
+  @@map("administradores")
+}
+
+// --- DEFINIÇÃO DOS ENUMS ---
+// Isso diz ao Prisma quais valores são aceitos nessas colunas
+enum nivel_nome {
+  INICIANTE
+  CURIOSO
+  CIENTISTA
+}
+
+enum ranking_nivel {
+  INICIANTE
+  CURIOSO
+  CIENTISTA
+}
