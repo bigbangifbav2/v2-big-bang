@@ -73,6 +73,40 @@ DATABASE_URL="mysql://usuario:senha@db:3306/nome-banco"
 # Se rodar localmente sem Docker (o host é localhost)
 DATABASE_URL="mysql://usuario:senha@localhost:3306/nome-banco"
 ```
+## 🐳 Configuração Principal do Docker (.env na Raiz)
+
+Para que o `docker-compose` suba os containers corretamente, é necessário configurar o arquivo de variáveis de ambiente na **raiz do projeto**.
+
+Este arquivo define a senha do banco de dados MySQL, a string de conexão que o Backend usará e a URL da API para o Frontend.
+
+### Passo a Passo
+
+1.  Na pasta raiz do projeto (onde está o `docker-compose.yml`), crie um arquivo chamado **`.env`** ou utilize o que está disponível neste repositório.
+2.  Preencha com as configurações abaixo:
+
+```ini
+# --- Configurações do Container MySQL ---
+# Define a senha do usuário 'root' do banco
+MYSQL_ROOT_PASSWORD=senha-usuario
+
+# Nome do banco de dados que será criado automaticamente
+MYSQL_DATABASE=nome-banco
+
+# --- Configurações do Backend ---
+# A URL de conexão deve usar a senha e o banco definidos acima.
+# Formato Docker: mysql://usuario:senha@db:3306/nome-banco
+DATABASE_URL="mysql://usuario:senha@db:3306/nome-banco"
+
+# Chave secreta para criptografia (JWT)
+JWT_SECRET="sua_chave_secreta_aqui"
+
+# Porta do container do Node.js
+PORT=3000
+
+# --- Configurações do Frontend ---
+# Endereço onde o React encontrará o Backend
+VITE_API_URL=http://localhost:3000
+```
 
 ## 📦 Como Rodar o Projeto
 
