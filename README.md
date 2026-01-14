@@ -39,6 +39,41 @@ No entanto, a arquitetura foi completamente transformada para atender aos padrõ
 ### Infraestrutura
 * **Docker & Docker Compose:** Containerização de todo o ambiente para fácil deploy e execução.
 
+## ⚙️ Configuração do Backend (API)
+
+As configurações sensíveis do servidor (como credenciais do banco e chaves de segurança) ficam isoladas na pasta do backend.
+
+### Passo a Passo
+
+1.  Acesse a pasta do backend:
+    ```bash
+    cd backend
+    ```
+
+2.  Crie o arquivo **`.env`** ou utilie o disponível no repositório `backend` baseado no exemplo existente:
+
+3.  Preencha as variáveis no arquivo **`.env`** recém-criado:
+
+| Variável | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `PORT` | Porta onde o servidor Node.js será executado. | `3000` |
+| `CORS_ORIGIN` | URL do Frontend que tem permissão para acessar a API. | `http://localhost:5173` |
+| `DATABASE_URL` | String de conexão do Prisma com o MySQL. | *Veja abaixo* |
+| `JWT_SECRET` | Chave privada para criptografar os tokens de login. | `sua_chave_secreta_aqui` |
+| `ADMIN_PASSWORD` | Senha inicial para criar o usuário administrador. | `admin123` |
+
+### 🔌 Exemplo de Conexão com Banco (DATABASE_URL)
+
+No arquivo `.env`, a URL de conexão deve seguir este formato:
+
+```ini
+# Se rodar com Docker (o host é o nome do container 'db')
+DATABASE_URL="mysql://usuario:senha@db:3306/nome-banco"
+
+# Se rodar localmente sem Docker (o host é localhost)
+DATABASE_URL="mysql://usuario:senha@localhost:3306/nome-banco"
+```
+
 ## 📦 Como Rodar o Projeto
 
 Este projeto utiliza Docker para garantir que funcione em qualquer máquina sem configurações complexas.
