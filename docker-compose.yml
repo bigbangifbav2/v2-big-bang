@@ -48,6 +48,8 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
 
 volumes:
   mysql_data:
