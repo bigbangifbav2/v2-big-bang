@@ -11,7 +11,6 @@ const router = Router();
 const upload = multer(uploadConfig);
 
 // --- CONFIGURAÇÃO DE UPLOAD MÚLTIPLO ---
-// Aceita o arquivo 'imagem' (obrigatória/principal) E 'imagemDistribuicao' (opcional)
 const uploadCampos = upload.fields([
     { name: 'imagem', maxCount: 1 },
     { name: 'imagemDistribuicao', maxCount: 1 }
@@ -26,7 +25,6 @@ router.use(authMiddleware);
 router.get('/elementos', ElementoController.listar);
 router.get('/elementos/:id', ElementoController.buscarPorId);
 
-// ALTERAÇÃO AQUI: Trocamos upload.single por uploadCampos
 router.post('/elementos', uploadCampos, ElementoController.criar);
 router.put('/elementos/:id', uploadCampos, ElementoController.atualizar);
 

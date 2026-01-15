@@ -1,11 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response } from 'express';
-// Ajuste os caminhos conforme sua estrutura real
 import { registrar, login } from './authController';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
-// Importamos aqui para tipagem, mas dentro do mock usaremos o import dinâmico ou global
 import { DeepMockProxy } from 'vitest-mock-extended';
 
 // 1. Mock das dependências externas
@@ -14,7 +12,6 @@ vi.mock('jsonwebtoken');
 
 // 2. Mock do Prisma Client - CORREÇÃO DE HOISTING
 vi.mock('../../prismaClient', async () => {
-    // Importamos a biblioteca DE DENTRO do mock para evitar erro de referência
     const actual = await vi.importActual<typeof import('vitest-mock-extended')>('vitest-mock-extended');
     return {
         __esModule: true,

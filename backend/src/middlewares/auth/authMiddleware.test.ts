@@ -81,7 +81,6 @@ describe('Auth Middleware', () => {
         expect(statusMock).not.toHaveBeenCalled();
 
         // 3. O Pulo do Gato: Verifica se ele injetou o ID no request
-        // (Usamos 'as any' pois userId não existe no tipo padrão do Request)
         expect((req as any).userId).toBe(99);
     });
 });

@@ -1,11 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as RankingService from './rankingService.js'; // Ajuste o caminho se necessário
+import * as RankingService from './rankingService.js';
 import prisma from '../../prismaClient.js';
 import { PrismaClient } from '@prisma/client';
-// Importação de tipagem apenas
 import { DeepMockProxy } from 'vitest-mock-extended';
 
-// 1. Mock do Prisma (Com correção de Hoisting)
+// 1. Mock do Prisma
 vi.mock('../../prismaClient', async () => {
     const actual = await vi.importActual<typeof import('vitest-mock-extended')>('vitest-mock-extended');
     return {
@@ -63,7 +62,6 @@ describe('Ranking Service', () => {
 
         it('Erro: Deve lançar/repassar erro se o banco de dados falhar', async () => {
             // ARRANGE
-            // Simulamos uma falha de conexão ou erro interno do Prisma
             prismaMock.ranking.findMany.mockRejectedValue(new Error('Falha na conexão com o DB'));
 
             // ACT & ASSERT

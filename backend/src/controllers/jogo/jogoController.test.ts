@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response } from 'express';
-// Ajuste o caminho para onde está seu controller
 import * as JogoController from './jogoController';
-// Ajuste o caminho para onde está seu service
 import * as JogoService from '../../services/jogo/jogoService.js';
 
 // 1. Mockamos o Service inteiro

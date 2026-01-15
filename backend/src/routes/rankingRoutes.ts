@@ -1,7 +1,7 @@
 // src/routes/rankingRoutes.ts
 
 import { Router } from 'express';
-import { handleGetRanking } from '../controllers/ranking/rankingController.js'; // Note o .js
+import { handleGetRanking } from '../controllers/ranking/rankingController.js';
 
 const router = Router();
 

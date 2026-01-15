@@ -4,14 +4,12 @@ import { Request, Response } from 'express';
 import { handleGetRanking } from './rankingController.js';
 
 // --- MOCK DO SERVICE (COM HOISTING) ---
-// 1. Criamos a função mockada ANTES de tudo
 const { mockGetTopRanking } = vi.hoisted(() => {
     return {
         mockGetTopRanking: vi.fn(),
     };
 });
 
-// 2. Injetamos no módulo
 vi.mock('../../services/ranking/rankingService.js', () => ({
     getTopRanking: mockGetTopRanking,
 }));
@@ -46,7 +44,6 @@ describe('Ranking Controller', () => {
             { nome: 'Teste', pontuacao: 500, nivel: 'INICIANTE' }
         ];
 
-        // Simulamos que o service retornou os dados corretamente
         mockGetTopRanking.mockResolvedValue(mockDadosRanking);
 
         // Act (Ação)
@@ -60,10 +57,8 @@ describe('Ranking Controller', () => {
 
     it('Erro: Deve retornar 500 se o service falhar', async () => {
         // Arrange
-        // Simulamos um erro de banco de dados ou lógica no service
         mockGetTopRanking.mockRejectedValue(new Error('Erro de conexão com BD'));
 
-        // Para não sujar o terminal com o console.error do controller, podemos "espiar" e silenciar
         const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
         // Act

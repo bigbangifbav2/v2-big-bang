@@ -11,7 +11,6 @@ export const getNiveis = async () => {
     return niveis;
 };
 
-// REMOVIDO: mapaDeSimbolos (agora usamos o do banco)
 
 export const getQuestaoComDicas = async (codNivel: number) => {
 
@@ -50,7 +49,6 @@ export const getQuestaoComDicas = async (codNivel: number) => {
     }
 
     // 4. Embaralhar as QUESTÕES (Objeto completo)
-    // Fazemos isso antes de selecionar os 12, para garantir variedade
     for (let i = questoesValidas.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         // Adicione o '!' no lado direito
@@ -61,7 +59,6 @@ export const getQuestaoComDicas = async (codNivel: number) => {
     const questoesSelecionadas = questoesValidas.slice(0, 12);
 
     // 6. Monta o objeto para o Front-end
-    // AQUI ESTÁ A MÁGICA: Usamos os dados do banco em vez de strings fixas
     const listaOpcoesLimitada = questoesSelecionadas.map((q: questao) => {
         return {
             nome: q.resposta!,

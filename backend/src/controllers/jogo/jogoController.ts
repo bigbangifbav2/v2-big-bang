@@ -19,7 +19,7 @@ export const handleGetQuestao = async (req: Request, res: Response) => {
     // 1. Extrair o parâmetro da URL
     const codNivelParam = req.params.codNivel; 
 
-    // 2. 💡 VALIDAÇÃO: Checa se o parâmetro existe
+    // 2. VALIDAÇÃO: Checa se o parâmetro existe
     if (!codNivelParam) {
         return res.status(400).json({ error: "O código do nível deve ser fornecido na URL." });
     }

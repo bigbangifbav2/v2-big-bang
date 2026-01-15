@@ -16,7 +16,6 @@ vi.mock('../../prismaClient', async () => {
 
 // 2. Mock do Bcryptjs (CORRIGIDO)
 vi.mock('bcryptjs', () => {
-    // Criamos o objeto de funções mockadas
     const mockBcrypt = {
         hash: vi.fn(),
         compare: vi.fn()

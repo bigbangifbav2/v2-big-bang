@@ -47,13 +47,11 @@ export const login = async (req: Request, res: Response) => {
     });
 
     // 4. Retorna dados do usuário e o token
-    // --- CORREÇÃO AQUI: INCLUIR AS PERMISSÕES ---
     return res.json({
         user: {
             id: admin.id,
             nome: admin.nome,
             email: admin.email,
-            // As novas colunas do banco:
             isSuperAdmin: admin.isSuperAdmin,
             podeGerenciarUsuarios: admin.podeGerenciarUsuarios,
             podeExcluirElementos: admin.podeExcluirElementos,

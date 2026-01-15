@@ -29,10 +29,8 @@ export const buscarPorId = async (req: Request, res: Response) => {
     }
 };
 
-// --- AQUI ESTAVA O PROBLEMA ---
 export const criar = async (req: Request, res: Response) => {
     try {
-        // Agora pegamos TODAS as variáveis que vêm do front
         const {
             nome,
             email,
@@ -61,7 +59,6 @@ export const criar = async (req: Request, res: Response) => {
     }
 };
 
-// --- AQUI TAMBÉM PRECISA ATUALIZAR ---
 export const atualizar = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -89,15 +86,12 @@ export const atualizar = async (req: Request, res: Response) => {
         } = req.body;
 
         // 3. TRAVA DE SEGURANÇA:
-        // Se o solicitante NÃO tiver poder de gerência, nós FORÇAMOS as permissões a serem undefined.
-        // O Prisma ignora campos undefined no update, então as permissões antigas do banco serão mantidas.
         if (!temPoderDeGerencia) {
             podeExcluirElementos = undefined;
             podeExcluirParticipantes = undefined;
             podeGerenciarUsuarios = undefined;
         }
 
-        // Se o cara tentar se promover via Postman, o backend vai ignorar as flags acima.
 
         await UsuarioService.atualizarUsuario(idUsuarioAlvo, {
             nome,

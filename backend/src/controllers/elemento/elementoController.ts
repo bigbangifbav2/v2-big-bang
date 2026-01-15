@@ -36,7 +36,7 @@ export const criar = async (req: Request, res: Response) => {
     try {
         const { nome, simbolo, nivel, dicas } = req.body;
 
-        // --- MUDANÇA AQUI: Lendo múltiplos arquivos ---
+        // --- Lendo múltiplos arquivos ---
         const files = req.files as MulterFiles;
 
         // Pega a imagem principal (campo 'imagem')

@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response } from 'express';
-// Ajuste o caminho se necessário para onde está seu controller
 import * as ElementoController from './elementoController.js';
-// Ajuste o caminho para onde está seu service (deve bater com o import do controller)
 import * as ElementoService from '../../services/elemento/elementoService.js';
 
 // 1. Mockamos o Service inteiro
@@ -93,7 +91,6 @@ describe('Elemento Controller', () => {
         });
     });
 
-    // --- CRIAR (Testando lógica de arquivos e JSON parsing) ---
     describe('criar', () => {
         it('Sucesso: Deve processar arquivos e criar elemento (Status 201)', async () => {
             // Arrange: Simulando Multipart Form Data (Multer)

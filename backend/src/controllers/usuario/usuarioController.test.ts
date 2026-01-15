@@ -1,10 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response } from 'express';
-// Ajuste o caminho conforme sua estrutura
 import * as UsuarioController from './usuarioController';
 import * as UsuarioService from '../../services/usuario/usuarioService.js';
 
-// 1. Criamos os mocks ANTES para evitar erro de hoisting
 const {
     mockListar,
     mockBuscar,
@@ -48,7 +46,7 @@ describe('Usuario Controller', () => {
             params: {},
             query: {},
             body: {},
-            userId: 1 // Simulamos um usuário logado padrão
+            userId: 1
         } as any; // 'as any' porque userId não existe no tipo Request padrão do Express
 
         res = {
@@ -178,15 +176,13 @@ describe('Usuario Controller', () => {
 
             await UsuarioController.atualizar(req as Request, res as Response);
 
-            // O pulo do gato: Esperamos que o controller tenha passado 'undefined'
-            // para as permissões, ignorando o 'true' do body
             expect(mockAtualizar).toHaveBeenCalledWith(20, {
                 nome: 'Hacker',
                 email: undefined,
                 senha: undefined,
                 podeExcluirElementos: undefined,
                 podeExcluirParticipantes: undefined,
-                podeGerenciarUsuarios: undefined // AQUI ESTÁ A TRAVA
+                podeGerenciarUsuarios: undefined
             });
         });
 

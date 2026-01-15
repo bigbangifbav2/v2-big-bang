@@ -23,7 +23,6 @@ export const deletar = async (req: Request, res: Response) => {
     }
 };
 
-// Se quiser implementar a edição de nome depois
 export const atualizar = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;

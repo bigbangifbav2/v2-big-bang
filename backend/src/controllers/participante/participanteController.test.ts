@@ -3,8 +3,6 @@ import { type Request, type Response } from 'express';
 import * as ParticipanteController from './participanteController.js';
 import * as ParticipanteService from '../../services/participante/participanteService.js';
 
-// --- CORREÇÃO DO HOISTING ---
-// Usamos vi.hoisted para criar os mocks ANTES do vi.mock rodar
 const { mockListar, mockDeletar, mockAtualizar } = vi.hoisted(() => {
     return {
         mockListar: vi.fn(),
@@ -13,7 +11,6 @@ const { mockListar, mockDeletar, mockAtualizar } = vi.hoisted(() => {
     };
 });
 
-// Agora podemos usar as variáveis dentro do mock sem erro
 vi.mock('../../services/participante/participanteService.js', () => ({
     listarParticipantes: mockListar,
     deletarParticipante: mockDeletar,
@@ -53,7 +50,6 @@ describe('Participante Controller', () => {
             req.query = {};
             const mockResultado = { dados: [], total: 0, pagina: 1 };
 
-            // Usamos a variável criada pelo vi.hoisted
             mockListar.mockResolvedValue(mockResultado);
 
             await ParticipanteController.listar(req as Request, res as Response);

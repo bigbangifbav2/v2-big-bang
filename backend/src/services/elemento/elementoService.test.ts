@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as ElementoService from './elementoService.js';
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
-// Importamos apenas a tipagem aqui em cima.
 // A função mockDeep será importada dinamicamente dentro do mock.
 import { DeepMockProxy } from 'vitest-mock-extended';
 
@@ -42,8 +41,6 @@ describe('Elemento Service', () => {
     beforeEach(() => {
         vi.clearAllMocks();
 
-        // Reseta os mocks do fs para cada teste
-        // Acessamos via default para garantir compatibilidade com o import do service
         ((fs as any).default?.promises?.stat || fs.promises.stat).mockResolvedValue(true);
         ((fs as any).default?.promises?.unlink || fs.promises.unlink).mockResolvedValue(true);
     });
@@ -82,7 +79,6 @@ describe('Elemento Service', () => {
 
             await ElementoService.listarElementos(1, 10, 'Ouro');
 
-            // CORREÇÃO: O expect deve procurar dentro de 'where'
             expect(prismaMock.questao.count).toHaveBeenCalledWith(expect.objectContaining({
                 where: expect.objectContaining({
                     OR: expect.arrayContaining([

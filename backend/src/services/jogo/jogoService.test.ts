@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as JogoService from './jogoService'; // Ajuste o caminho
-import prisma from '../../prismaClient'; // Ajuste o caminho
+import * as JogoService from './jogoService';
+import prisma from '../../prismaClient';
 import { DeepMockProxy } from 'vitest-mock-extended';
 import { PrismaClient } from '@prisma/client';
 
@@ -40,7 +40,6 @@ describe('Jogo Service', () => {
 
     // --- GET QUESTAO COM DICAS ---
     describe('getQuestaoComDicas', () => {
-        // CORREÇÃO AQUI: Garantir que a resposta seja única por ID se não for fornecida
         const criarQuestaoMock = (id: number, resposta: string | null = null) => ({
             codQuestao: id,
             codNivel: 1,
@@ -53,10 +52,8 @@ describe('Jogo Service', () => {
 
         it('Sucesso: Deve retornar até 12 questões com dicas mapeadas', async () => {
             // ARRANGE
-            // 1. Criamos 15 questões (Resp 1 ... Resp 15)
             const mockQuestoes = Array.from({ length: 15 }, (_, i) => criarQuestaoMock(i + 1));
 
-            // 2. Criamos dicas APENAS para as questões 1 e 2
             const mockDicas = [
                 { codDica: 1, codQuestao: 1, dica: 'Dica Q1' },
                 { codDica: 2, codQuestao: 2, dica: 'Dica Q2' }
@@ -79,13 +76,8 @@ describe('Jogo Service', () => {
             expect(primeiraOpcao).toBeDefined();
             expect(primeiraOpcao).toHaveProperty('imgUrl');
 
-            // CORREÇÃO DA VERIFICAÇÃO:
-            // Procuramos especificamente pela Questão 1 ('Resp 1') na lista embaralhada
             const rodadaQ1 = result.rodadas.find(r => r.nomeElemento === 'Resp 1');
 
-            // Como existe um sorteio aleatório, a Questão 1 pode ter ficado de fora dos 12 selecionados.
-            // Se ela estiver presente, verificamos a dica. Se não, verificamos a Q2 ou aceitamos o teste.
-            // Para robustez do teste, verificamos se *alguma* das questões mockadas com dica apareceu.
             const questaoComDicaEncontrada = result.rodadas.find(r =>
                 r.nomeElemento === 'Resp 1' || r.nomeElemento === 'Resp 2'
             );
@@ -118,8 +110,6 @@ describe('Jogo Service', () => {
 
         it('Erro: Deve lançar erro se houver questões mas sem resposta válida', async () => {
             const questaoInvalida = criarQuestaoMock(1, null); // Resposta null
-            // Forçamos null aqui pois o helper trata null, então passamos vazio direto no objeto se precisar
-            // Mas o helper acima já foi ajustado. Vamos criar manualmente para garantir o teste de erro:
             const qManual = {
                 codQuestao: 1, codNivel: 1, resposta: null, simbolo: 'S', imagemUrl: null, imgDistribuicao: null
             };

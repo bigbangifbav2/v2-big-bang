@@ -1,11 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as ParticipanteService from './participanteService.js'; // Ajuste se necessário
+import * as ParticipanteService from './participanteService.js';
 import { PrismaClient } from '@prisma/client';
-// Tipagem para o mock
-// Tipagem para o mock
 import type {DeepMockProxy} from 'vitest-mock-extended';
 
-// 1. Mock do Prisma (Com a correção do Hoisting para evitar ReferenceError)
+// 1. Mock do Prisma
 vi.mock('../../prismaClient', async () => {
     const actual = await vi.importActual<typeof import('vitest-mock-extended')>('vitest-mock-extended');
     return {

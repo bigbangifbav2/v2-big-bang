@@ -67,7 +67,6 @@ export const listarElementos = async (page: number = 1, limit: number = 10, busc
         simbolo: el.simbolo,
         codNivel: el.codNivel,
         imagemUrl: el.imagemUrl,
-        // ADICIONADO: Retornar a nova imagem
         imgDistribuicao: el.imgDistribuicao,
         dicas: el.dicas.map(d => d.dica)
     }));
@@ -93,7 +92,6 @@ export const buscarPorId = async (id: number) => {
             simbolo: el.simbolo,
             nivel: el.codNivel,
             imagemUrl: el.imagemUrl,
-            // ADICIONADO: Retornar a nova imagem
             imgDistribuicao: el.imgDistribuicao,
             dicas: el.dicas.map(d => d.dica)
         }
@@ -101,7 +99,6 @@ export const buscarPorId = async (id: number) => {
     return null;
 };
 
-// ALTERADO: Recebe o terceiro parâmetro opcional
 export const criarElemento = async (dados: CreateDados, nomeImagem?: string, nomeImagemDistribuicao?: string) => {
     // 1. Validação: Exatamente 3 dicas
     if (dados.dicas.length !== 3) {
@@ -129,7 +126,6 @@ export const criarElemento = async (dados: CreateDados, nomeImagem?: string, nom
             codNivel: dados.nivel,
             // Mantendo padrão de salvar o path relativo
             imagemUrl: nomeImagem ? `/uploads/${nomeImagem}` : null,
-            // NOVO CAMPO
             imgDistribuicao: nomeImagemDistribuicao ? `/uploads/${nomeImagemDistribuicao}` : null,
             dicas: {
                 create: dados.dicas.map((texto, index) => ({
@@ -143,7 +139,6 @@ export const criarElemento = async (dados: CreateDados, nomeImagem?: string, nom
     });
 };
 
-// ALTERADO: Recebe o quarto parâmetro opcional
 export const atualizarElemento = async (id: number, dados: UpdateDados, novoNomeImagem?: string, novoNomeImagemDistribuicao?: string) => {
     if (dados.dicas && dados.dicas.length !== 3) {
         throw new Error("É obrigatório manter exatamente 3 dicas.");
@@ -199,7 +194,6 @@ export const deletarElemento = async (id: number) => {
     // Deleta os arquivos físicos
     await deletarImagemAntiga(elemento.imagemUrl);
 
-    // ADICIONADO: Deleta também a imagem de distribuição se existir
     await deletarImagemAntiga(elemento.imgDistribuicao);
 
     await prisma.dicas.deleteMany({ where: { codQuestao: id } });

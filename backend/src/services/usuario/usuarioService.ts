@@ -43,7 +43,6 @@ export const listarUsuarios = async (page: number, limit: number, busca: string)
             id: true,
             nome: true,
             email: true,
-            // Senha oculta
             isSuperAdmin: true,
             podeExcluirElementos: true,
             podeExcluirParticipantes: true,
