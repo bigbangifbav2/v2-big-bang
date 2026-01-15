@@ -7,7 +7,6 @@ import '../../styles/styleCreditosTutorialPage.css';
 const Tutorial: React.FC = () => {
 
     useEffect(() => {
-        // Reutilizamos a mesma classe pois o estilo de layout é idêntico
         document.body.classList.add('creditos-page-body');
 
         return () => {

@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
-    // Começa false (com som), mas o navegador pode bloquear.
     const [isMuted, setIsMuted] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -16,22 +15,19 @@ const Home: React.FC = () => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        // Ajusta volume para não estourar os ouvidos (opcional)
+        // Ajusta volume para não estourar os ouvidos
         audio.volume = 0.5;
         audio.muted = isMuted;
 
         if (!isMuted) {
-            // Tenta tocar imediatamente
             const playPromise = audio.play();
 
             if (playPromise !== undefined) {
                 playPromise.catch((error) => {
                     console.log("Autoplay bloqueado pelo navegador. Aguardando interação do usuário...", error);
 
-                    // PLANO B: Tocar no primeiro clique em qualquer lugar da tela
                     const forcePlay = () => {
                         audio.play();
-                        // Remove o ouvinte após conseguir tocar
                         document.removeEventListener('click', forcePlay);
                     };
                     document.addEventListener('click', forcePlay);

@@ -2,13 +2,13 @@
 
 import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import '../../styles/styleCreditosTutorialPage.css'; // Vamos criar esse CSS abaixo
+import '../../styles/styleCreditosTutorialPage.css';
 
 interface Membro {
     nome: string;
     funcao: string;
     descricao?: string;
-    lattes?: string; // Opcional, pois Daiana não tinha no antigo
+    lattes?: string;
 }
 
 const Creditos: React.FC = () => {

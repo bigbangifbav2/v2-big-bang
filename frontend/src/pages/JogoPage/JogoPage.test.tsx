@@ -20,12 +20,10 @@ vi.mock('react-router-dom', async () => {
 vi.mock('../../components/GameTutorial/GameTutorial', () => ({
     default: () => <div data-testid="mock-tutorial"></div>
 }));
-// Caso o tutorial esteja solto na pasta components use:
-// vi.mock('../../components/GameTutorial.tsx', ...
 
-// 3. Mock da Tabela Periódica (AQUI ESTAVA O PROBLEMA)
+
+// 3. Mock da Tabela Periódica
 // O caminho deve ser EXATAMENTE igual ao import dentro do JogoPage.tsx
-// Ajustei para o padrão de pasta que vimos antes:
 vi.mock('../../components/TabelaPeriodicaInterativa/TabelaPeriodicaInterativa', () => ({
     default: ({ onPosicaoClick }: { onPosicaoClick: (val: string) => void }) => (
         <div data-testid="tabela-mock">
@@ -146,7 +144,6 @@ describe('Página JogoPage', () => {
         act(() => { vi.advanceTimersByTime(2000); });
 
         // 3. Clica na POSIÇÃO NA TABELA (Botão do Mock)
-        // Usamos findByText para garantir que o React processou a mudança de estado após o timer
         const btnPosicao = await screen.findByText('Posição H');
         fireEvent.click(btnPosicao);
 

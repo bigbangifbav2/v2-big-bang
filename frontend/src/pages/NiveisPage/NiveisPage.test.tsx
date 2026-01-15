@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import NiveisPage from './NiveisPage';
-import '@testing-library/jest-dom'; // Importante para o toBeInTheDocument
+import '@testing-library/jest-dom';
 
 // --- MOCKS ---
 const mockNiveisData = [
@@ -49,11 +49,9 @@ describe('Página NiveisPage', () => {
     // --- TESTES CORRIGIDOS ---
 
     it('Deve mostrar "Carregando..." enquanto busca dados', () => {
-        // Mock que nunca resolve (pending) para simular loading infinito
         window.fetch = vi.fn().mockReturnValue(new Promise(() => {})) as unknown as typeof fetch;
 
         renderPage();
-        // CORREÇÃO: O texto no componente é "Carregando...", não "Carregando Níveis..."
         expect(screen.getByText(/Carregando.../i)).toBeInTheDocument();
     });
 
@@ -63,7 +61,6 @@ describe('Página NiveisPage', () => {
 
         renderPage();
 
-        // Agora que adicionamos a lógica de erro no componente, este teste vai passar
         await waitFor(() => {
             expect(screen.getByText(/Erro:/i)).toBeInTheDocument();
         });

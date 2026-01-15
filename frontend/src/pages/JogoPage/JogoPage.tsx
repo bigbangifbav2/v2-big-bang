@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import TabelaPeriodicaInterativa from '../../components/TabelaPeriodicaInterativa/TabelaPeriodicaInterativa.tsx';
 import FimDeJogo from "../../components/FimDeJogo/FimDeJogo.tsx";
-import GameTutorial from '../../components/GameTutorial/GameTutorial.tsx'; // <--- 1. IMPORTAÇÃO DO TUTORIAL
+import GameTutorial from '../../components/GameTutorial/GameTutorial.tsx';
 import '../../styles/styleJogoPage.css';
 
 // Configuração da URL da API
@@ -91,7 +91,7 @@ const JogoPage: React.FC = () => {
     };
 
     useEffect(() => {
-        const jaViu = localStorage.getItem('bigbang_tutorial_v5'); // Mudei a chave pra v5 pra resetar pra você
+        const jaViu = localStorage.getItem('bigbang_tutorial_v5');
         if (!jaViu) {
             setTutorialAtivo(true);
         }

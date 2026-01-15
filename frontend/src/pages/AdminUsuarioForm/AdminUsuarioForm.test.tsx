@@ -73,7 +73,6 @@ describe('Página AdminUsuarioForm', () => {
         vi.clearAllMocks();
         mockedParams.id = undefined;
         sessionStorage.setItem('token', 'fake-token');
-        // NOTA: Não ativamos fake timers globais para não atrapalhar testes de GET
     });
 
     afterEach(() => {
@@ -167,7 +166,6 @@ describe('Página AdminUsuarioForm', () => {
     });
 
     it('Deve criar um NOVO usuário com sucesso (POST) e navegar', async () => {
-        // CORREÇÃO: { shouldAdvanceTime: true } permite que Promises resolvam dentro do waitFor
         vi.useFakeTimers({ shouldAdvanceTime: true });
 
         mockedParams.id = undefined;
@@ -193,7 +191,6 @@ describe('Página AdminUsuarioForm', () => {
             expect(toast.success).toHaveBeenCalledWith("Novo usuário criado!");
         });
 
-        // Agora avançamos o tempo para disparar o setTimeout do navigate (1000ms)
         await act(async () => {
             vi.advanceTimersByTime(1000);
         });
@@ -202,7 +199,6 @@ describe('Página AdminUsuarioForm', () => {
     });
 
     it('Deve atualizar um usuário EXISTENTE com sucesso (PUT)', async () => {
-        // Sem fake timers aqui, pois a lógica de API é simples e não testaremos o navigate
         mockedParams.id = '55';
         mockApi.get.mockResolvedValueOnce({ data: mockUsuarioExistente });
         mockApi.put.mockResolvedValueOnce({ data: { success: true } });

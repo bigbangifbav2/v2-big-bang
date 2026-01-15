@@ -15,7 +15,7 @@ interface Elemento {
 interface AdminLogado {
     id: number;
     isSuperAdmin: boolean;
-    podeExcluirElementos: boolean; // Essa é a permissão importante aqui
+    podeExcluirElementos: boolean;
 }
 
 interface RespostaAPI {

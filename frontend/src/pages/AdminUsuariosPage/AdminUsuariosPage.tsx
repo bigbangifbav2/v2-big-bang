@@ -202,7 +202,6 @@ const AdminUsuariosPage: React.FC = () => {
 
                                 // --- NOVA REGRA ESTRITA DE EDIÇÃO ---
 
-                                // 1. Preciso ter ALGUM poder (Gerente ou SuperAdmin)
                                 // Se for usuário comum (podeGerenciar = false), isso já dá false de cara.
                                 const tenhoPoder = podeGerenciar || amISuperAdmin;
 
@@ -210,7 +209,6 @@ const AdminUsuariosPage: React.FC = () => {
                                 const alvoProtegido = alvoSuperAdmin && !amISuperAdmin;
 
                                 // 3. Resultado: Tenho poder E o alvo não está protegido.
-                                // (Note que removemos o "|| souEu", então o usuário comum não edita nem a si mesmo aqui)
                                 const podeEditarEsteUsuario = tenhoPoder && !alvoProtegido;
 
                                 return (

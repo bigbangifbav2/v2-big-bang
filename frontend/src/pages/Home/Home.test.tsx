@@ -50,9 +50,6 @@ describe('Página Home', () => {
             value: false
         });
 
-        // 2. CORREÇÃO CONSTRUTOR (Para o new Audio())
-        // IMPORTANTE: Usamos 'function' normal em vez de arrow function '() =>'
-        // Arrow functions não podem ser chamadas com 'new'.
         window.Audio = vi.fn().mockImplementation(function() {
             return {
                 play: playMock,
@@ -114,12 +111,10 @@ describe('Página Home', () => {
         renderHome();
 
         const btnPlay = screen.getByTitle('Jogar');
-        // Usamos closest('a') para garantir que clicamos no link se a imagem não propagar
         const link = btnPlay.closest('a') || btnPlay;
 
         fireEvent.click(link);
 
-        // CORREÇÃO AQUI: Atualizado para o nome do arquivo que seu código realmente usa
         expect(window.Audio).toHaveBeenCalledWith('/musica/selecao-nivel.wav');
     });
 });

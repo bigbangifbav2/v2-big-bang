@@ -38,7 +38,7 @@ const mockRespostaAPI = {
     data: mockElementos,
     total: 3,
     pagina: 1,
-    totalPaginas: 2 // Para testar paginação
+    totalPaginas: 2
 };
 
 // --- HELPERS ---
@@ -76,9 +76,6 @@ describe('Página AdminElementosPage', () => {
         vi.useRealTimers();
     });
 
-    /**
-     * Helper para renderizar e avançar o tempo (debounce inicial)
-     */
     const renderAndLoad = async () => {
         render(
             <BrowserRouter>

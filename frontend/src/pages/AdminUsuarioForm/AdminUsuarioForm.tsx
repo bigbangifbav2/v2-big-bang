@@ -91,12 +91,10 @@ const AdminUsuarioForm: React.FC = () => {
             const token = sessionStorage.getItem('token');
             const config = { headers: { Authorization: `Bearer ${token}` } };
 
-            // --- INCLUÍMOS AS PERMISSÕES NO PAYLOAD ---
             const payload = {
                 nome,
                 email,
                 senha,
-                // Espalha as permissões (podeExcluirElementos, etc) dentro do objeto
                 ...permissoes
             };
 
@@ -196,7 +194,7 @@ const AdminUsuarioForm: React.FC = () => {
                             id="perm1"
                             checked={permissoes.podeExcluirElementos || isSuperAdmin}
                             onChange={() => handleCheckChange('podeExcluirElementos')}
-                            disabled={isSuperAdmin} // Super Admin tem tudo habilitado fixo
+                            disabled={isSuperAdmin}
                         />
                         <label className="form-check-label text-white" htmlFor="perm1">
                             Pode <strong>Excluir Elementos</strong>

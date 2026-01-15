@@ -37,8 +37,7 @@ const LoginPage: React.FC = () => {
     return (
         <div className="login-page-wrapper">
 
-            {/* --- NOVO BOTÃO DE VOLTAR ESTILO GAME --- */}
-            {/* Usamos um SVG para desenhar a seta branca perfeitamente */}
+            {/* --- BOTÃO DE VOLTAR --- */}
             <Link to="/" className="btn-voltar-imagem-fixo">
                 <img
                     src="/img/voltar.png"

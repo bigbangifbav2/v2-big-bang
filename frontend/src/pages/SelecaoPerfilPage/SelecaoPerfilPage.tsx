@@ -33,7 +33,6 @@ const SelecaoPerfilPage: React.FC = () => {
 
     // --- NOVA FUNÇÃO: Tocar som ao Iniciar Jogo ---
     const tocarSomJogar = () => {
-        // Reutilizamos o som de seleção de nível para confirmar o início
         const audio = new Audio('/musica/selecao-nivel.wav');
         audio.volume = 0.5;
         audio.play().catch(e => console.warn("Erro ao tocar som:", e));

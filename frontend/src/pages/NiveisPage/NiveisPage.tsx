@@ -35,7 +35,6 @@ const LEVEL_CONFIG: Record<number, { img: string; texto: string; wrapperClass: s
 const NiveisPage: React.FC = () => {
     const [niveis, setNiveis] = useState<NivelData[]>([]);
     const [loading, setLoading] = useState(true);
-    // 1. ADICIONADO: Estado de erro que faltava
     const [error, setError] = useState<string | null>(null);
 
     const tocarSom = () => {
@@ -48,7 +47,6 @@ const NiveisPage: React.FC = () => {
         const fetchNiveis = async () => {
             try {
                 const response = await fetch(API_NIVEIS_URL);
-                // 2. ADICIONADO: Verificação de erro da API
                 if (!response.ok) {
                     throw new Error(`Erro: ${response.status}`);
                 }
@@ -57,7 +55,6 @@ const NiveisPage: React.FC = () => {
                 setNiveis(data);
             } catch (err) {
                 console.error(err);
-                // 3. ADICIONADO: Atualiza o estado para mostrar na tela
                 setError("Não foi possível carregar os níveis.");
             } finally {
                 setLoading(false);
@@ -66,10 +63,8 @@ const NiveisPage: React.FC = () => {
         fetchNiveis();
     }, []);
 
-    // 4. ATUALIZADO: O texto aqui é "Carregando..." (ajustaremos o teste para bater com isso)
     if (loading) return <div className="text-center mt-5 text-white">Carregando...</div>;
 
-    // 5. ADICIONADO: Renderização da mensagem de erro
     if (error) return <div className="text-center mt-5 text-white">Erro: {error}</div>;
 
     return (

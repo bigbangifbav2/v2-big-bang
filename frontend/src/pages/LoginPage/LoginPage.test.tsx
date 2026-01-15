@@ -22,7 +22,7 @@ describe('Página LoginPage', () => {
         vi.clearAllMocks();
         sessionStorage.clear();
 
-        // Mock padrão do fetch (pode ser sobrescrito em cada teste)
+        // Mock padrão do fetch
         globalThis.fetch = vi.fn();
     });
 
@@ -168,8 +168,6 @@ describe('Página LoginPage', () => {
     });
 
     it('Não deve submeter se os campos estiverem vazios (Validação HTML)', () => {
-        // Nota: O JSDOM (ambiente de teste) não bloqueia submit nativo de HTML 'required'
-        // da mesma forma que o browser, mas podemos verificar se os atributos estão lá.
         renderPage();
 
         const inputEmail = screen.getByPlaceholderText('admin@exemplo.com');

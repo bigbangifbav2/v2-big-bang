@@ -27,9 +27,6 @@ const TROPHY_MAP: Record<keyof GroupedRanking, string> = {
     CURIOSO: '/img/trofeu/prata.png',    
 };
 
-/**
- * Função utilitária para agrupar e ordenar os dados por nível e pontuação.
- */
 const groupAndSortRanking = (entries: RankingEntry[]): GroupedRanking => {
   const grouped: GroupedRanking = {
     INICIANTE: [],

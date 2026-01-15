@@ -50,13 +50,11 @@ describe('Página AdminParticipantesPage', () => {
         confirmSpy = vi.spyOn(window, 'confirm').mockImplementation(() => true) as unknown as Mock;
         vi.spyOn(console, 'error').mockImplementation(() => {});
 
-        // Mock do Fetch Padrão (Sucesso na listagem)
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
             json: async () => mockRespostaAPI,
         });
 
-        // Por padrão, tem permissão
         setupSession(true);
     });
 
@@ -91,7 +89,7 @@ describe('Página AdminParticipantesPage', () => {
     });
 
     it('Deve DESABILITAR o botão Excluir se o usuário NÃO tiver permissão', async () => {
-        setupSession(false); // Sem permissão
+        setupSession(false);
         render(<AdminParticipantesPage />);
 
         await waitFor(() => screen.getByText('Jogador 1'));
@@ -108,7 +106,6 @@ describe('Página AdminParticipantesPage', () => {
     // =========================================================================
 
     it('Deve abrir o modal ao clicar em "Nome" e salvar a edição', async () => {
-        // Configura mocks sequenciais
         (globalThis.fetch as Mock)
             .mockResolvedValueOnce({ ok: true, json: async () => mockRespostaAPI }) // 1. Lista
             .mockResolvedValueOnce({ ok: true, json: async () => ({ success: true }) }) // 2. Salvar
@@ -123,7 +120,7 @@ describe('Página AdminParticipantesPage', () => {
         const btnsEditar = screen.getAllByText('✏️ Nome');
         fireEvent.click(btnsEditar[0]);
 
-        // 2. CORREÇÃO: Usa findByText para esperar o Modal aparecer (animação/state)
+        // 2. Usa findByText para esperar o Modal aparecer (animação/state)
         const modalTitle = await screen.findByText('Editar: Jogador 1');
         expect(modalTitle).toBeInTheDocument();
 
@@ -214,7 +211,7 @@ describe('Página AdminParticipantesPage', () => {
         // Abre Modal
         fireEvent.click(screen.getAllByText('✏️ Nome')[0]);
 
-        // CORREÇÃO: Espera o modal aparecer antes de clicar em salvar
+        // Espera o modal aparecer antes de clicar em salvar
         const btnSalvar = await screen.findByText('Salvar Alterações');
         fireEvent.click(btnSalvar);
 

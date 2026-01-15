@@ -13,7 +13,6 @@ vi.mock('react-router-dom', async () => {
     return {
         ...atual,
         useNavigate: () => mockedNavigate,
-        // Simulamos que o parâmetro da URL é o nível 1
         useParams: () => ({ codNivel: '1' }),
     };
 });
@@ -30,7 +29,6 @@ describe('Página SelecaoPerfilPage', () => {
         sessionStorage.clear();
 
         // 2. Mock do window.alert
-        // Precisamos mockar o alert senão o JSDOM pode lançar erro ou travar o teste
         vi.spyOn(window, 'alert').mockImplementation(() => {});
 
         // 3. Mock do Áudio (Igual aos testes anteriores)

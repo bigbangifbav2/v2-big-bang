@@ -103,10 +103,6 @@ const AdminElementoForm: React.FC = () => {
         if (!nome || !simbolo) return toast.error('Preencha Nome e Símbolo.');
         if (dicas.some(d => d.trim() === '')) return toast.error('Preencha as 3 dicas.');
 
-        // Validação extra para Nível 1
-        // Se for criar novo nível 1, a distribuição é obrigatória? Se sim, descomente abaixo:
-        // if (!id && nivel === '1' && !distArquivo) return toast.error('Nível Iniciante exige a imagem do Cerne.');
-
         try {
             setLoading(true);
             const formData = new FormData();

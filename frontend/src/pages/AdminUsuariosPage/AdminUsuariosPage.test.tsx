@@ -76,9 +76,6 @@ describe('Página AdminUsuariosPage', () => {
         vi.useRealTimers();
     });
 
-    /**
-     * Helper crucial: Renderiza e AVANÇA O TEMPO para vencer o debounce do useEffect
-     */
     const renderAndLoad = async () => {
         render(
             <BrowserRouter>
@@ -152,7 +149,7 @@ describe('Página AdminUsuariosPage', () => {
     });
 
     it('Deve realizar busca ao digitar no campo de pesquisa', async () => {
-        await renderAndLoad(); // Carregamento inicial
+        await renderAndLoad();
 
         const inputBusca = screen.getByPlaceholderText(/Buscar por nome/i);
 
@@ -229,7 +226,7 @@ describe('Página AdminUsuariosPage', () => {
         setupSession(false, true, 2); // Admin Comum (ID 2)
         await renderAndLoad();
 
-        // CORREÇÃO: Usar getAllByText e pegar o primeiro (qualquer um serve para provar que carregou)
+        // Usar getAllByText e pegar o primeiro (qualquer um serve para provar que carregou)
         await waitFor(() => {
             expect(screen.getAllByText('Super Admin').length).toBeGreaterThan(0);
         });
@@ -251,7 +248,7 @@ describe('Página AdminUsuariosPage', () => {
         setupSession(false, true, 2);
         await renderAndLoad();
 
-        // CORREÇÃO: Usar getAllByText
+        // Usar getAllByText
         await waitFor(() => {
             expect(screen.getAllByText('Super Admin').length).toBeGreaterThan(0);
         });
