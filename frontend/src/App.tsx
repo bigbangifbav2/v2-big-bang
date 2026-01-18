@@ -17,6 +17,9 @@ import AdminUsuariosPage from "./pages/AdminUsuariosPage/AdminUsuariosPage.tsx";
 import AdminUsuarioForm from "./pages/AdminUsuarioForm/AdminUsuarioForm.tsx";
 import Creditos from './pages/CreditosPage/Creditos.tsx'; // <--- IMPORTAR
 import Tutorial from './pages/TutorialPage/Tutorial.tsx';
+import "primereact/resources/themes/lara-light-cyan/theme.css"; // Tema (pode trocar 'lara-light-cyan' por outros)
+import "primereact/resources/primereact.min.css";              // Core CSS
+import "primeicons/primeicons.css";
 
 const App: React.FC = () => {
   return (
