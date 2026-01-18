@@ -102,7 +102,7 @@ const AdminElementoForm: React.FC = () => {
                 return true;
             }
             return elemento.n.toLowerCase().includes(query) ||
-                   elemento.s.toLowerCase().includes(query);
+                elemento.s.toLowerCase().includes(query);
         });
         setSugestoesFiltradas(resultados);
     };
@@ -215,6 +215,10 @@ const AdminElementoForm: React.FC = () => {
                                     <div className="text-muted"><i className="bi bi-image fs-1"></i></div>}
                         </div>
                         <input type="file" className="form-control mt-2" accept="image/*" onChange={handleImageChange} />
+                        {/* AVISO DE RESOLUÇÃO - Cor alterada para text-light */}
+                        <small className="text-light d-block mt-1" style={{ fontSize: '0.85rem' }}>
+                            Resolução máxima: 89x84 px
+                        </small>
                     </div>
                     {nivel === '1' && (
                         <div className="text-center p-3 border border-warning rounded bg-dark">
@@ -234,7 +238,7 @@ const AdminElementoForm: React.FC = () => {
                         <label className="form-label text-warning">
                             {id ? 'Elemento (Leitura)' : 'Pesquisar Elemento'}
                         </label>
-                        
+
                         <AutoComplete
                             value={valorSelecionado}
                             suggestions={sugestoesFiltradas}
@@ -252,7 +256,7 @@ const AdminElementoForm: React.FC = () => {
                             virtualScrollerOptions={{ itemSize: 41 }}
                             appendTo={document.body}
                         />
-                        
+
                         {!id && <small className="text-muted d-block mt-2">Comece a digitar ou clique na seta para ver a lista.</small>}
                     </div>
 
