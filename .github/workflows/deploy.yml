@@ -18,7 +18,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY_BIG_BANG }}
-        port: 22
+        port: 3022
         script: |
           cd ~/v2-big-bang
           
