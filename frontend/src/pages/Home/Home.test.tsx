@@ -100,11 +100,11 @@ describe('Página Home', () => {
         renderHome();
         const btnSom = screen.getByAltText('Controle de Som');
 
-        expect(btnSom).toHaveAttribute('src', '/img/som_on.png');
+        expect(btnSom).toHaveAttribute('src', '/img/som_on.webp');
         fireEvent.click(btnSom);
-        expect(btnSom).toHaveAttribute('src', '/img/som_off.png');
+        expect(btnSom).toHaveAttribute('src', '/img/som_off.webp');
         fireEvent.click(btnSom);
-        expect(btnSom).toHaveAttribute('src', '/img/som_on.png');
+        expect(btnSom).toHaveAttribute('src', '/img/som_on.webp');
     });
 
     it('Deve tentar tocar o som de seleção ao clicar no Play', () => {

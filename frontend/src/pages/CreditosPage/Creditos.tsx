@@ -135,7 +135,7 @@ const Creditos: React.FC = () => {
             {/* Botão Voltar */}
             <div className="footer-voltar">
                 <Link to="/">
-                    <img src="/img/voltar.png" className="efeito-btn" alt="Voltar" title="Voltar ao Início" />
+                    <img src="/img/voltar.webp" className="efeito-btn" alt="Voltar" title="Voltar ao Início" />
                 </Link>
             </div>
         </div>

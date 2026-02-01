@@ -17,7 +17,7 @@ const Tutorial: React.FC = () => {
     return (
         <div className="creditos-container">
             <div className="creditos-header">
-                <img src="/img/tutorial.png" alt="Tutorial" className="img-titulo-creditos" />
+                <img src="/img/tutorial.webp" alt="Tutorial" className="img-titulo-creditos" />
             </div>
 
             <div className="creditos-scroll-area" style={{ textAlign: 'left', color: 'white' }}>
@@ -56,7 +56,7 @@ const Tutorial: React.FC = () => {
 
             <div className="footer-voltar">
                 <Link to="/">
-                    <img src="/img/voltar.png" className="efeito-btn" alt="Voltar" />
+                    <img src="/img/voltar.webp" className="efeito-btn" alt="Voltar" />
                 </Link>
             </div>
         </div>

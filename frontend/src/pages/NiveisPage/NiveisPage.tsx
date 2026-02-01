@@ -71,7 +71,7 @@ const NiveisPage: React.FC = () => {
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-7">
-                    <img id="selecionar_nivel" src="/img/selecionar_nivel.png" alt="Selecionar nível" className="img-fluid" />
+                    <img id="selecionar_nivel" src="/img/selecionar_nivel.webp" alt="Selecionar nível" className="img-fluid" />
                 </div>
             </div>
 
@@ -104,7 +104,7 @@ const NiveisPage: React.FC = () => {
                 <div className="col-2">
                     <div id="bt_voltar">
                         <Link to="/">
-                            <img className="efeito" src="/img/voltar.png" alt="Voltar" title="Voltar" />
+                            <img className="efeito" src="/img/voltar.webp" alt="Voltar" title="Voltar" />
                         </Link>
                     </div>
                 </div>

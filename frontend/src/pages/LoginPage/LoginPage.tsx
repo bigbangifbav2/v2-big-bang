@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
             {/* --- BOTÃO DE VOLTAR --- */}
             <Link to="/" className="btn-voltar-imagem-fixo">
                 <img
-                    src="/img/voltar.png"
+                    src="/img/voltar.webp"
                     alt="Voltar para o Início"
                     title="Voltar para o Início"
                 />

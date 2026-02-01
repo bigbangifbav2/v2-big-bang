@@ -79,19 +79,19 @@ const Home: React.FC = () => {
             <div className="row justify-content-center">
                 <div className="col-9">
                     <div className="home-interactive-area">
-                        <img className="estrutura" src="/img/fundo.png" alt="Fundo" />
+                        <img className="estrutura" src="/img/fundo.webp" alt="Fundo" />
 
                         {/* Botões com som de clique */}
                         <Link to="/niveis" onClick={playSelectionSound}>
-                            <img id="bt_play" src="/img/play.png" alt="play" title="Jogar" />
+                            <img id="bt_play" src="/img/play.webp" alt="play" title="Jogar" />
                         </Link>
 
                         <Link to="/tutorial" onClick={playSelectionSound}>
-                            <img id="bt_tutorial" src="/img/tutorial.png" alt="Tutorial" title="Tutorial" />
+                            <img id="bt_tutorial" src="/img/tutorial.webp" alt="Tutorial" title="Tutorial" />
                         </Link>
 
                         <Link to="/ranking" onClick={playSelectionSound}>
-                            <img id="bt_ranking" src="/img/ranking.png" alt="Ranking" title="Ranking" />
+                            <img id="bt_ranking" src="/img/ranking.webp" alt="Ranking" title="Ranking" />
                         </Link>
 
                         <Link to="/creditos" onClick={playSelectionSound}>
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
                         {/* Botão de Controle de Som */}
                         <div id="bt_som" onClick={toggleMusic} style={{ cursor: 'pointer' }}>
                             <img
-                                src={isMuted ? "/img/som_off.png" : "/img/som_on.png"}
+                                src={isMuted ? "/img/som_off.webp" : "/img/som_on.webp"}
                                 id="imgSom"
                                 title={isMuted ? "Ligar Som" : "Desligar Som"}
                                 alt="Controle de Som"
