@@ -174,7 +174,7 @@ const RankingPage: React.FC = () => {
         <div className="row justify-content-start mt-5">
             <div className="col-2 offset-md-1"> 
                 <div id="bt_voltar">
-                    <Link to="/"><img className="efeito" src="/img/voltar.png" title="Voltar" alt="Voltar ao Menu" /></Link>
+                    <Link to="/"><img className="efeito" src="/img/voltar.webp" title="Voltar" alt="Voltar ao Menu" /></Link>
                 </div>
             </div>
         </div>
