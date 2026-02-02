@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import TabelaPeriodicaInterativa from '../../components/TabelaPeriodicaInterativa/TabelaPeriodicaInterativa.tsx';
 import FimDeJogo from "../../components/FimDeJogo/FimDeJogo.tsx";
@@ -58,9 +58,6 @@ const JogoPage: React.FC = () => {
     type FeedbackType = 'neutro' | 'acerto' | 'erro';
     const [feedbackType, setFeedbackType] = useState<FeedbackType>('neutro');
 
-    // REF para controlar o tempo da mensagem (evitar que ela suma antes da hora)
-    const feedbackTimerRef = useRef<number | null>(null);
-
     // Estados da Rodada
     const [dicasExibidas, setDicasExibidas] = useState<string[]>([]);
     const [pontosDestaDica, setPontosDestaDica] = useState(0);
@@ -106,23 +103,13 @@ const JogoPage: React.FC = () => {
         }
     }, []);
 
-    // --- FUNÇÃO DE FEEDBACK ATUALIZADA ---
-    const mostrarFeedback = (texto: string, tipo: FeedbackType, resetDelay = 3000) => {
-        // Limpa qualquer timer anterior para não apagar a mensagem nova
-        if (feedbackTimerRef.current) {
-            clearTimeout(feedbackTimerRef.current);
-        }
-
+    const mostrarFeedback = (texto: string, tipo: FeedbackType, resetDelay = 2000) => {
         setMensagem(texto);
         setFeedbackType(tipo);
 
-        // Se não for neutro, agenda para limpar depois de X segundos
         if (tipo !== 'neutro') {
-            feedbackTimerRef.current = setTimeout(() => {
+            setTimeout(() => {
                 setFeedbackType('neutro');
-                // Opcional: Se quiser que o texto suma também, descomente abaixo:
-                // setMensagem('');
-                console.log(resetDelay)
             }, resetDelay);
         }
     };
@@ -201,6 +188,7 @@ const JogoPage: React.FC = () => {
         }
     }
 
+    // --- NOVO: Função para registrar histórico ---
     const registrarHistorico = (
         nomeElemento: string,
         acertouDica: boolean,
@@ -272,10 +260,7 @@ const JogoPage: React.FC = () => {
         if (opcao.nome === rodada.nomeElemento) {
             tocarSomAcerto();
             setPontuacaoAtual(prev => prev + pontosDestaDica);
-
-            // Mantive o tempo longo (60s) para não sumir enquanto o usuário procura a posição
-            mostrarFeedback(`🎉 ACERTOU O ELEMENTO!!! (+${pontosDestaDica} pts)\nAgora clique na posição correta na tabela periódica!`, 'acerto', 500);
-
+            mostrarFeedback(`🎉 ACERTOU!!! (+${pontosDestaDica} pts) Agora clique na posição correta!`, 'acerto');
             setElementoSelecionado(opcao);
             setOpcoesUsadas(prev => [...prev, opcao.nome]);
             setGameStage('posicionandoElemento');
@@ -283,13 +268,14 @@ const JogoPage: React.FC = () => {
             setBloqueado(true);
             tocarSomErro();
 
+            // --- NOVO: Registra erro no histórico ---
             registrarHistorico(rodada.nomeElemento, false, false, 0, 0, 0);
 
-            mostrarFeedback(`❌ ERROU! Indo para a próxima...\n Clique em "Ver detalhes" para saber os detalhes da pontuação.`, 'erro');
+            mostrarFeedback(`❌ ERROU! Indo para a próxima... \n\n Clique em "Ver detalhes" para saber mais`, 'erro');
             setGameStage('precisaDica');
             setTimeout(() => {
                 proximaRodada();
-            }, 1000);
+            }, 2000);
         }
     };
 
@@ -306,13 +292,11 @@ const JogoPage: React.FC = () => {
         setBloqueado(true);
         setGameStage('precisaDica');
 
-        // Captura a mensagem atual (que contém "ACERTOU O ELEMENTO!!!...")
-        const mensagemAnterior = mensagem;
-
         if (posicaoValor === rodada.posicaoElemento) {
             tocarSomAcerto();
             setPontuacaoAtual(prev => prev + PONTOS_POR_POSICAO);
 
+            // --- NOVO: Registra acerto total no histórico ---
             registrarHistorico(
                 rodada.nomeElemento,
                 true,
@@ -322,14 +306,12 @@ const JogoPage: React.FC = () => {
                 PONTOS_POR_POSICAO
             );
 
-            // --- ALTERAÇÃO AQUI: Texto adicional sobre "Ver detalhes" ---
-            const msgFinal = `${mensagemAnterior}\n\n🎉 POSIÇÃO CORRETA! (+${PONTOS_POR_POSICAO} pts)\n Clique em "Ver detalhes" para saber os detalhes da pontuação.`;
-            mostrarFeedback(msgFinal, 'acerto', 500); // 5s para ler
-
+            mostrarFeedback(`🎉 POSIÇÃO CORRETA! (+${PONTOS_POR_POSICAO} pts)\n\n Clique em "Ver detalhes" para saber mais`, 'acerto');
             setPosicoesUsadas(prev => [...prev, posicaoValor]);
         } else {
             tocarSomErro();
 
+            // --- NOVO: Registra acerto parcial no histórico ---
             registrarHistorico(
                 rodada.nomeElemento,
                 true,
@@ -339,13 +321,11 @@ const JogoPage: React.FC = () => {
                 0
             );
 
-            const msgFinal = `${mensagemAnterior}\n\n❌ Posição incorreta! (0 pts)\n Clique em "Ver detalhes" para saber os detalhes da pontuação.`;
-
-            mostrarFeedback(msgFinal, 'erro', 500);
+            mostrarFeedback(`❌ Posição incorreta! Preparando próxima rodada...\n\n Clique em "Ver detalhes" para saber mais`, 'erro');
         }
         setTimeout(() => {
             proximaRodada();
-        }, 4500); // Aumentei para 4.5s para dar tempo de ler antes de trocar a rodada
+        }, 2000);
     };
 
     const getImagemUrl = (url: string | undefined | null, nomeElemento: string) => {
@@ -397,6 +377,7 @@ const JogoPage: React.FC = () => {
                         <h4 className="player-name">{playerName}</h4>
 
                         {/* --- PONTUAÇÃO E BOTÃO "VER DETALHES" --- */}
+
                         <p className="player-score" style={{ marginBottom: '8px' }}>
                             Pontos: {pontuacaoAtual}
                         </p>
@@ -406,19 +387,19 @@ const JogoPage: React.FC = () => {
                             title="Ver histórico de acertos e erros"
                             style={{
                                 background: 'transparent',
-                                border: '1px solid #15d2a3',
+                                border: '1px solid #15d2a3', // Cor do tema (Ciano/Verde)
                                 color: '#15d2a3',
-                                borderRadius: '20px',
+                                borderRadius: '20px', // Borda arredondada (estilo pílula)
                                 padding: '4px 16px',
                                 fontSize: '0.85rem',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s ease',
                                 display: 'block',
-                                margin: '0 auto'
+                                margin: '0 auto' // Centraliza
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.backgroundColor = '#15d2a3';
-                                e.currentTarget.style.color = '#111';
+                                e.currentTarget.style.color = '#111'; // Texto escuro no hover
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.backgroundColor = 'transparent';
@@ -427,11 +408,12 @@ const JogoPage: React.FC = () => {
                         >
                             Ver detalhes
                         </button>
+
+                        {/* ------------------------------------------ */}
                     </div>
 
                     <div className={`status-message-box ${feedbackType}`}>
-                        {/* whiteSpace: 'pre-wrap' permite que o \n funcione */}
-                        <p style={{ whiteSpace: 'pre-wrap' }}>{mensagem}</p>
+                        <p>{mensagem}</p>
                     </div>
 
                     <div className="tour-ajudas">
