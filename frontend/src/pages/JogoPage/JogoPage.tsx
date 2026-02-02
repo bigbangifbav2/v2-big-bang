@@ -357,6 +357,7 @@ const JogoPage: React.FC = () => {
                 pontuacao={pontuacaoAtual}
                 nivel={nomeNivel}
                 nomeJogador={playerName}
+                historico={historico}
             />
         );
     }
