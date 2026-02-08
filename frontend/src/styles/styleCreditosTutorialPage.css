@@ -230,3 +230,54 @@ body.creditos-page-body #root {
         gap: 20px;
     }
 }
+
+/* --- BOTÃO VOLTAR FIXO (ESTILO FINAL) --- */
+
+/* 1. O Container (A bolinha ou área do clique) */
+.btn-voltar-fixo {
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 30px !important;
+    z-index: 9999 !important;
+
+    /* DEFINIMOS O TAMANHO AQUI NO PAI */
+    width: 80px !important;
+    height: 80px !important;
+
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    /* Removemos bordas ou fundos indesejados se houver */
+    background: transparent !important;
+    border: none !important;
+}
+
+.btn-voltar-fixo:hover {
+    transform: scale(1.1);
+}
+
+/* 2. A Imagem (Apenas obedece o pai) */
+.img-voltar-fixo {
+    width: 100% !important; /* Ocupa 100% do container de 80px */
+    height: auto !important;
+    display: block !important;
+
+    /* Garante que a imagem não estique se a proporção for diferente */
+    object-fit: contain !important;
+
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));
+}
+
+/* --- AJUSTE PARA CELULAR (Mobile) --- */
+@media (max-width: 768px) {
+    .btn-voltar-fixo {
+        /* No celular, forçamos um tamanho menor */
+        width: 50px !important;
+        height: 50px !important;
+        bottom: 20px !important;
+        left: 20px !important;
+    }
+}

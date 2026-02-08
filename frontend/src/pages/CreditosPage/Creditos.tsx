@@ -96,9 +96,7 @@ const Creditos: React.FC = () => {
                 <img src="/img/nome_credito.png" alt="Créditos" className="img-titulo-creditos" />
             </div>
 
-            {/* A "Scroll Area" agora é apenas um container visual, o scroll é na janela */}
             <div className="creditos-scroll-area">
-
                 {/* --- SEÇÃO 2025 --- */}
                 <h2 className="titulo-secao">Equipe 2025 (Refatoração & Tecnologias Web)</h2>
                 <div className="grid-membros">
@@ -130,29 +128,17 @@ const Creditos: React.FC = () => {
                 </div>
             </div>
 
-            {/* Botão Voltar (Agora FIXO no canto) */}
+            {/* --- BOTÃO VOLTAR LIMPO --- */}
+            {/* O estilo agora vem 100% da classe CSS abaixo */}
             <Link
                 to="/"
-                style={{
-                    position: 'fixed',
-                    bottom: '20px',
-                    left: '20px',
-                    zIndex: 9999,
-                    display: 'block',
-                    transition: 'transform 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                className="btn-voltar-fixo"
                 title="Voltar ao Início"
             >
                 <img
                     src="/img/voltar.webp"
                     alt="Voltar"
-                    style={{
-                        width: '60px',
-                        height: 'auto',
-                        filter: 'drop-shadow(0px 0px 5px rgba(0,0,0,0.5))'
-                    }}
+                    className="img-voltar-fixo"
                 />
             </Link>
         </div>
