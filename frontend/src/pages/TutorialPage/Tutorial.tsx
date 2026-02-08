@@ -1,5 +1,3 @@
-// src/pages/Tutorial.tsx
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/styleCreditosTutorialPage.css';
@@ -16,6 +14,7 @@ const Tutorial: React.FC = () => {
 
     return (
         <div className="creditos-container">
+            {/* Título Principal */}
             <div className="creditos-header">
                 <img src="/img/tutorial.webp" alt="Tutorial" className="img-titulo-creditos" />
             </div>
@@ -54,11 +53,18 @@ const Tutorial: React.FC = () => {
                 </div>
             </div>
 
-            <div className="footer-voltar">
-                <Link to="/">
-                    <img src="/img/voltar.webp" className="efeito-btn" alt="Voltar" />
-                </Link>
-            </div>
+            {/* --- BOTÃO VOLTAR FIXO (IGUAL CRÉDITOS) --- */}
+            <Link
+                to="/"
+                className="btn-voltar-fixo"
+                title="Voltar ao Início"
+            >
+                <img
+                    src="/img/voltar.webp"
+                    alt="Voltar"
+                    className="img-voltar-fixo"
+                />
+            </Link>
         </div>
     );
 };
