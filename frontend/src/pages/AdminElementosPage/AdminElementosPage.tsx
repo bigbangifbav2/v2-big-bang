@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
-import {TABELA_PERIODICA_COMPLETA} from "../../constants/TabelaPeriodica.ts";
+import { TABELA_PERIODICA_COMPLETA } from "../../constants/TabelaPeriodica.ts";
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -12,7 +12,6 @@ interface Elemento {
     codNivel: number;
 }
 
-// Interface para ler do SessionStorage
 interface AdminLogado {
     id: number;
     isSuperAdmin: boolean;
@@ -28,7 +27,11 @@ interface RespostaAPI {
 
 const AdminElementosPage: React.FC = () => {
     const navigate = useNavigate();
+
+    // Estados de Filtro
     const [busca, setBusca] = useState('');
+    const [nivelFiltro, setNivelFiltro] = useState('TODOS'); // <--- NOVO
+
     const [elementos, setElementos] = useState<Elemento[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -43,23 +46,21 @@ const AdminElementosPage: React.FC = () => {
         carregarPermissoes();
     }, []);
 
+    // Atualiza quando busca, pagina ou FILTRO mudar
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            carregarElementos(paginaAtual, busca);
+            carregarElementos(paginaAtual, busca, nivelFiltro);
         }, 500);
 
         return () => clearTimeout(timeoutId);
-    }, [paginaAtual, busca]);
+    }, [paginaAtual, busca, nivelFiltro]);
 
-    // --- LER PERMISSÕES ---
     const carregarPermissoes = () => {
         const dadosString = sessionStorage.getItem('adminUser');
         if (dadosString) {
             try {
                 const admin: AdminLogado = JSON.parse(dadosString);
-                // Pode excluir se for Super Admin OU tiver a permissão específica
                 const temPermissao = Boolean(admin.isSuperAdmin || admin.podeExcluirElementos);
-                console.log(temPermissao);
                 setPodeExcluir(temPermissao);
             } catch (e) {
                 console.error("Erro ao ler permissões", e);
@@ -67,11 +68,12 @@ const AdminElementosPage: React.FC = () => {
         }
     };
 
-    const carregarElementos = async (page: number, termoBusca: string) => {
+    const carregarElementos = async (page: number, termoBusca: string, nivel: string) => {
         setLoading(true);
         try {
             const token = sessionStorage.getItem('token');
-            const url = `${BASE_URL}/api/elementos?page=${page}&limit=5&busca=${termoBusca}`;
+            // Adicionando &nivel=...
+            const url = `${BASE_URL}/api/elementos?page=${page}&limit=5&busca=${termoBusca}&nivel=${nivel}`;
 
             const res = await fetch(url, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -79,7 +81,6 @@ const AdminElementosPage: React.FC = () => {
 
             if(res.ok) {
                 const dados = await res.json();
-
                 if (dados.data) {
                     const resposta = dados as RespostaAPI;
                     setElementos(resposta.data);
@@ -100,17 +101,14 @@ const AdminElementosPage: React.FC = () => {
 
     const obterNomeFormatado = (simboloApi: string, nomeApi: string) => {
         if (!simboloApi) return nomeApi;
-
         const elementoEncontrado = TABELA_PERIODICA_COMPLETA.find(
             el => el.s.toLowerCase() === simboloApi.toLowerCase()
         );
-
         return elementoEncontrado ? elementoEncontrado.n : nomeApi;
     };
 
     const handleDelete = async (id: number) => {
         if(!confirm("Tem certeza que deseja excluir este elemento?")) return;
-
         try {
             const token = sessionStorage.getItem('token');
             const res = await fetch(`${BASE_URL}/api/elementos/${id}`, {
@@ -120,7 +118,7 @@ const AdminElementosPage: React.FC = () => {
 
             if (res.ok) {
                 toast.success("Excluído com sucesso!");
-                carregarElementos(paginaAtual, busca);
+                carregarElementos(paginaAtual, busca, nivelFiltro);
             } else {
                 const err = await res.json();
                 toast.error(err.error || "Erro ao excluir.");
@@ -142,11 +140,9 @@ const AdminElementosPage: React.FC = () => {
                 >
                     Anterior
                 </button>
-
                 <span className="d-flex align-items-center px-3 text-white">
                     Página {paginaAtual} de {totalPaginas}
                 </span>
-
                 <button
                     className="btn btn-outline-secondary btn-sm"
                     onClick={() => setPaginaAtual(prev => Math.min(prev + 1, totalPaginas))}
@@ -162,10 +158,70 @@ const AdminElementosPage: React.FC = () => {
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2 className="text-white">🧪 Gerenciar Elementos</h2>
-                {/* Botão Novo Elemento: Todos podem criar (padrão) */}
                 <button className="btn btn-success" onClick={() => navigate('/admin/elementos/novo')}>
                     + Novo Elemento
                 </button>
+            </div>
+
+            {/* --- ÁREA DE FILTROS (Igual Participantes) --- */}
+            <div className="mb-4 d-flex flex-wrap align-items-center gap-3">
+                <label className="text-white fw-bold me-2 mb-0">Filtrar por Nível:</label>
+
+                <div className="form-check d-flex align-items-center mb-0">
+                    <input
+                        className="form-check-input mt-0"
+                        type="radio"
+                        name="nivelOptions"
+                        id="radioTodos"
+                        value="TODOS"
+                        checked={nivelFiltro === 'TODOS'}
+                        onChange={(e) => { setNivelFiltro(e.target.value); setPaginaAtual(1); }}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    <label className="form-check-label text-white ms-2 mb-0" htmlFor="radioTodos" style={{ cursor: 'pointer' }}>Todos</label>
+                </div>
+
+                <div className="form-check d-flex align-items-center mb-0">
+                    <input
+                        className="form-check-input mt-0"
+                        type="radio"
+                        name="nivelOptions"
+                        id="radioIniciante"
+                        value="INICIANTE"
+                        checked={nivelFiltro === 'INICIANTE'}
+                        onChange={(e) => { setNivelFiltro(e.target.value); setPaginaAtual(1); }}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    <label className="form-check-label text-info ms-2 mb-0" htmlFor="radioIniciante" style={{ cursor: 'pointer' }}>Iniciante</label>
+                </div>
+
+                <div className="form-check d-flex align-items-center mb-0">
+                    <input
+                        className="form-check-input mt-0"
+                        type="radio"
+                        name="nivelOptions"
+                        id="radioCurioso"
+                        value="CURIOSO"
+                        checked={nivelFiltro === 'CURIOSO'}
+                        onChange={(e) => { setNivelFiltro(e.target.value); setPaginaAtual(1); }}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    <label className="form-check-label text-warning ms-2 mb-0" htmlFor="radioCurioso" style={{ cursor: 'pointer' }}>Curioso</label>
+                </div>
+
+                <div className="form-check d-flex align-items-center mb-0">
+                    <input
+                        className="form-check-input mt-0"
+                        type="radio"
+                        name="nivelOptions"
+                        id="radioCientista"
+                        value="CIENTISTA"
+                        checked={nivelFiltro === 'CIENTISTA'}
+                        onChange={(e) => { setNivelFiltro(e.target.value); setPaginaAtual(1); }}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    <label className="form-check-label text-danger ms-2 mb-0" htmlFor="radioCientista" style={{ cursor: 'pointer' }}>Cientista</label>
+                </div>
             </div>
 
             <div className="mb-4">
@@ -206,11 +262,9 @@ const AdminElementosPage: React.FC = () => {
                                             {el.simbolo.charAt(0).toUpperCase() + el.simbolo.slice(1).toLowerCase()}
                                         </span>
                                     </td>
-
                                     <td className="fw-bold">
                                         {obterNomeFormatado(el.simbolo, el.nome)}
                                     </td>
-
                                     <td>
                                         {el.codNivel === 1 && <span className="badge bg-info text-dark">INICIANTE</span>}
                                         {el.codNivel === 2 && <span className="badge bg-warning text-dark">CURIOSO</span>}
@@ -224,11 +278,10 @@ const AdminElementosPage: React.FC = () => {
                                             ✏️ Editar
                                         </button>
 
-                                        {/* LÓGICA DE EXCLUSÃO */}
                                         <button
                                             className="btn btn-sm btn-outline-danger"
                                             onClick={() => podeExcluir && handleDelete(el.id)}
-                                            disabled={!podeExcluir} // Desabilita se não tiver permissão
+                                            disabled={!podeExcluir}
                                             style={!podeExcluir ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
                                             title={!podeExcluir ? "Sem permissão para excluir" : "Excluir elemento"}
                                         >
@@ -248,7 +301,6 @@ const AdminElementosPage: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
-
                     {renderPaginacao()}
                 </>
             )}
